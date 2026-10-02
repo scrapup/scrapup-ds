@@ -13,12 +13,14 @@ permissions: {}
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  # Superseded PR runs are cancelled; every commit on main keeps a final status.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   # Types, brand rules, unit tests with coverage, library build, size budget and catalog build.
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: read
     steps:
@@ -27,7 +29,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24
+          node-version-file: .nvmrc
           cache: npm
       - run: npm ci
       - run: npm run typecheck
@@ -35,38 +37,42 @@ jobs:
       - run: npm run lint:css
       - run: npm run test:coverage
       - name: Coverage summary
-        if: ${{ !cancelled() && hashFiles('coverage/coverage-summary.json') != '' }}
-        run: |
-          node -e '
-            const { total } = require("./coverage/coverage-summary.json");
-            const rows = ["lines", "branches", "functions", "statements"]
-              .map((k) => `| ${k} | ${total[k].pct}% |`).join("\n");
-            process.stdout.write(`### Unit coverage\n\n| Metric | Covered |\n|---|---:|\n${rows}\n`);
-          ' >> "$GITHUB_STEP_SUMMARY"
+        if: ${{ !cancelled() }}
+        run: node scripts/coverage-summary.mjs >> "$GITHUB_STEP_SUMMARY"
       - run: npm run build
       - run: npm run size
       - run: npm run build-storybook
 
-  # Playwright against the built catalog on the pinned container, so browser and fonts
-  # are deterministic for visual baselines (plan §5.4). Keep the image tag equal to
-  # the @playwright/test version.
+  # Playwright against the built catalog on the pinned container (tag + digest), so browser
+  # and fonts are deterministic for visual baselines (plan §5.4). The image version must equal
+  # the @playwright/test version; the first step enforces it.
   e2e:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: read
     container:
-      image: mcr.microsoft.com/playwright:v1.63.0-noble
+      image: mcr.microsoft.com/playwright:v1.63.0-noble@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27
     env:
+      # The image runs as root; browsers refuse a HOME owned by another user.
       HOME: /root
+      PLAYWRIGHT_IMAGE_VERSION: 1.63.0
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24
+          node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - name: Assert Playwright image parity
+        run: |
+          installed=$(node -p 'require("@playwright/test/package.json").version')
+          if [ "$installed" != "$PLAYWRIGHT_IMAGE_VERSION" ]; then
+            echo "::error::@playwright/test $installed != container image $PLAYWRIGHT_IMAGE_VERSION — bump both together."
+            exit 1
+          fi
       - run: npm run build-storybook
       - run: npm run test:e2e
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -77,4 +83,5 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 7
-          if-no-files-found: ignore
+          if-no-files-found: warn
+          overwrite: true
