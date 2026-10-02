@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { resolveOption } from './resolveOption';
+import { pickOption, resolveOption } from './resolveOption';
 
 const SIZES = ['sm', 'md', 'lg'] as const;
 
@@ -16,5 +16,13 @@ describe('resolveOption', () => {
     expect(resolveOption(undefined, SIZES, 'md')).toBe('md');
     expect(resolveOption(42, SIZES, 'md')).toBe('md');
     expect(resolveOption(null, SIZES, 'md')).toBe('md');
+  });
+});
+
+describe('pickOption', () => {
+  it('returns the value when allowed and undefined otherwise', () => {
+    expect(pickOption('sm', SIZES)).toBe('sm');
+    expect(pickOption('huge', SIZES)).toBeUndefined();
+    expect(pickOption(undefined, SIZES)).toBeUndefined();
   });
 });

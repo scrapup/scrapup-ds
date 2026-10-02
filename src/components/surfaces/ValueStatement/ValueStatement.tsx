@@ -13,11 +13,12 @@ export interface ValueStatementProps {
 
 /** Manifesto-style value rows: the preferred term glows, the rest stays grey. */
 export function ValueStatement({ pairs, note, className }: ValueStatementProps): React.JSX.Element | null {
-  if (pairs.length === 0) return null;
+  const rows = pairs.filter(([preferred]) => hasContent(preferred));
+  if (rows.length === 0) return null;
   return (
     <Panel className={cx('su-value-statement', className)} padding="xxl">
       <div className="su-value-statement__rows">
-        {pairs.map(([preferred, rest], index) => (
+        {rows.map(([preferred, rest], index) => (
           <p className="su-value-statement__row" key={`${String(index)}-${preferred}`}>
             <span className="su-value-statement__preferred">{preferred}</span> {rest}
           </p>

@@ -12,8 +12,8 @@ export type FeatureCardLabelTone = (typeof LABEL_TONES)[number];
 
 export interface FeatureCardProps {
   /** Neon mono index, e.g. "01". */
-  index?: ReactNode;
-  /** Tracked mono label, e.g. "ARCHITECT" (makes the title larger). */
+  index?: string | number;
+  /** Tracked mono label, e.g. "ARCHITECT" (makes the title larger); used only without an index. */
   label?: ReactNode;
   title: ReactNode;
   body?: ReactNode;
@@ -33,7 +33,7 @@ export function FeatureCard({
   labelTone,
   className,
 }: FeatureCardProps): React.JSX.Element {
-  const isLabelled = hasContent(label);
+  const isLabelled = !hasContent(index) && hasContent(label);
   return (
     <Panel accentEdge={accentEdge} className={cx('su-feature-card', isLabelled && 'su-feature-card--labelled', className)}>
       {hasContent(index) && <p className="su-feature-card__index">{index}</p>}

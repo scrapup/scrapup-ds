@@ -12,7 +12,7 @@ export type StatCardTone = (typeof TONES)[number];
 export interface StatCardProps {
   /** Big glowing figure, e.g. "+37.6%". */
   value?: ReactNode;
-  /** Short heading used instead of a value. */
+  /** Short heading shown only when there is no value. */
   title?: ReactNode;
   body: ReactNode;
   /** Mono citation under the body. */
@@ -27,7 +27,7 @@ export function StatCard({ value, title, body, source, tone, className }: StatCa
   return (
     <Panel className={cx('su-stat-card', `su-stat-card--${resolveOption(tone, TONES, 'neon')}`, className)}>
       {hasContent(value) && <p className="su-stat-card__value">{value}</p>}
-      {hasContent(title) && <p className="su-stat-card__title">{title}</p>}
+      {!hasContent(value) && hasContent(title) && <p className="su-stat-card__title">{title}</p>}
       <p className="su-stat-card__body">{body}</p>
       {hasContent(source) && <p className="su-stat-card__source">{source}</p>}
     </Panel>

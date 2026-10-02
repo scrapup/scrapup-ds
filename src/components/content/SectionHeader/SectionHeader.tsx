@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { cx } from '../../../lib/cx';
 import { hasContent } from '../../../lib/hasContent';
 import { resolveOption } from '../../../lib/resolveOption';
-import { splitHighlight } from '../../../lib/splitHighlight';
+import { renderHighlight } from '../../../lib/renderHighlight';
 import { Eyebrow } from '../Eyebrow';
 import './SectionHeader.css';
 
@@ -37,7 +37,6 @@ export function SectionHeader({
   bar = false,
   className,
 }: SectionHeaderProps): React.JSX.Element {
-  const parts = splitHighlight(title, highlight);
   return (
     <div className={cx('su-section-header', `su-section-header--${resolveOption(size, SIZES, 'md')}`, className)}>
       {hasContent(eyebrow) && (
@@ -46,15 +45,7 @@ export function SectionHeader({
         </Eyebrow>
       )}
       <h2 className="su-section-header__title">
-        {parts ? (
-          <>
-            {parts[0]}
-            <span className="su-section-header__highlight">{parts[1]}</span>
-            {parts[2]}
-          </>
-        ) : (
-          title
-        )}
+        {renderHighlight(title, highlight, 'su-section-header__highlight')}
       </h2>
       {bar && <div aria-hidden="true" className="su-section-header__bar" />}
       {hasContent(body) && <p className="su-section-header__body">{body}</p>}

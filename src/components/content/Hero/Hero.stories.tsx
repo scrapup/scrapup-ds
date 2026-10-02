@@ -46,9 +46,9 @@ export const Minimal: Story = {
 
 export const AllVariants: Story = {
   render: () => (
-    <>
+    <div className="sb-story-stack sb-story-stack--wide">
       <Hero highlight="forged" status="BETA" title="From scrap to forged delivery." />
       <Hero kicker="MANIFESTO" lead="Beliefs behind the process." title="Engineering, sealed by humans." />
-    </>
+    </div>
   ),
 };

@@ -43,6 +43,17 @@ describe('Panel', () => {
     expect(root?.className).toBe('su-panel su-panel--default su-panel--pad-md');
   });
 
+  it('passes id and aria-labelledby to name a section landmark', () => {
+    const { container } = render(
+      <Panel aria-labelledby="pricing-title" as="section" id="pricing">
+        <h2 id="pricing-title">Pricing</h2>
+      </Panel>,
+    );
+    const root = container.firstElementChild;
+    expect(root?.getAttribute('id')).toBe('pricing');
+    expect(root?.getAttribute('aria-labelledby')).toBe('pricing-title');
+  });
+
   it('appends className to the root', () => {
     const { container } = render(<Panel className="extra">x</Panel>);
     expect(container.firstElementChild?.classList.contains('extra')).toBe(true);

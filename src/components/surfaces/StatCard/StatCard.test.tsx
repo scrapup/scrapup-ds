@@ -20,6 +20,12 @@ describe('StatCard', () => {
     expect(container.querySelector('.su-stat-card__value')).toBeNull();
   });
 
+  it('shows the value, not the title, when both are given', () => {
+    const { container } = render(<StatCard body="b" title="t" value="1" />);
+    expect(container.querySelector('.su-stat-card__title')).toBeNull();
+    expect(container.querySelector('.su-stat-card__value')?.textContent).toBe('1');
+  });
+
   it('renders only the body when neither value nor title is given', () => {
     const { container } = render(<StatCard body="only body" />);
     expect(container.querySelector('.su-stat-card__value, .su-stat-card__title, .su-stat-card__source')).toBeNull();

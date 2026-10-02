@@ -22,7 +22,7 @@
 .su-stat-card__title {
   color: var(--su-fg-2);
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: var(--type-stat-title);
   font-weight: 600;
   line-height: 1.2;
 }
@@ -33,7 +33,7 @@
   line-height: 1.5;
 }
 
-.su-stat-card > :not(:first-child).su-stat-card__body {
+.su-stat-card > .su-stat-card__body:not(:first-child) {
   margin-top: 12px;
 }
 

@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { expectNoA11yViolations } from '../support/a11y';
-import { COLOR } from '../support/colors';
+import { COLOR, NEON_GLOW } from '../support/colors';
 import { gotoStory } from '../support/story';
 import { describeVisualBaselines } from '../support/visual';
 
@@ -11,7 +11,7 @@ test.describe('Surfaces/StatCard', () => {
     await expect(value).toHaveText('+37.6%');
     await expect(value).toHaveCSS('color', COLOR.neon);
     await expect(value).toHaveCSS('font-family', /Space Grotesk/);
-    await expect(value).toHaveCSS('text-shadow', /color\(srgb 1 0\.478431 0\.2/);
+    await expect(value).toHaveCSS('text-shadow', NEON_GLOW);
   });
 
   test('renders the cyan tone', async ({ page }) => {

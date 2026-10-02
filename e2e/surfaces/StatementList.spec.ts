@@ -11,6 +11,8 @@ test.describe('Surfaces/StatementList', () => {
     await expect(page.locator('.su-statement-list__number').first()).toHaveText('01');
     await expect(page.locator('.su-statement-list__number').first()).toHaveCSS('color', COLOR.neon);
     await expect(page.locator('.su-statement-list')).toHaveCSS('list-style-type', 'none');
+    await expect(page.locator('.su-statement-list')).toHaveCSS('border-top-style', 'solid');
+    await expect(page.locator('.su-statement-list__item').first()).toHaveCSS('border-bottom-style', 'solid');
     await expect(page.locator('.su-statement-list__text').first()).toHaveCSS('color', COLOR.textHeading);
   });
 

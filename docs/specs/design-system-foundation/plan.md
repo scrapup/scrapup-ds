@@ -293,9 +293,9 @@ Per-component contract (defaults in **bold**):
 | Tag | `children`; `tone?: **'cyan'** \| 'quiet' \| 'neon'` |
 | CodeChip | `children`; `hint?` |
 | FlowLine | `steps?` (**['scrap','forge','forged delivery']**) |
-| Panel | `variant?: **'default'** \| 'strong' \| 'edge' \| 'dashed'`; `accentEdge?: 'neon' \| 'cyan'`; `padding?: **'md'(24)** \| 'lg'(28) \| 'xl'(32) \| 'xxl'(42)`; `as?: 'div' \| 'section' \| 'article'`; `children`; `className?` |
-| StatCard | `value?`; `title?`; `body` (required); `source?`; `tone?: **'neon'** \| 'cyan'` |
-| FeatureCard | `index?`; `label?`; `title` (required); `body?`; `accentEdge?`; `labelTone?: **'neon'** \| 'cyan'` |
+| Panel | `variant?: **'default'** \| 'strong' \| 'edge' \| 'dashed'`; `accentEdge?: 'neon' \| 'cyan'`; `padding?: **'md'(24)** \| 'lg'(28) \| 'xl'(32) \| 'xxl'(42)`; `as?: 'div' \| 'section' \| 'article'`; `id?`; `aria-labelledby?`; `children`; `className?` |
+| StatCard | `value?`; `title?` (shown only without value); `body` (required); `source?`; `tone?: **'neon'** \| 'cyan'` |
+| FeatureCard | `index?`; `label?` (shown only without index); `title` (required); `body?`; `accentEdge?`; `labelTone?: **'neon'** \| 'cyan'` |
 | StatementList | `items: ReactNode[]` (empty → renders nothing) |
 | ValueStatement | `pairs: [string, string][]`; `note?` |
 | MilestoneAxis | `title?`; `meta?`; `milestones: {code, phase, body?, current?}[]`; `currentLabel?` |

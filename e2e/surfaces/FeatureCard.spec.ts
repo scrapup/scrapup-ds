@@ -17,8 +17,8 @@ test.describe('Surfaces/FeatureCard', () => {
   test('renders the role card with a cyan label, larger title and cyan edge', async ({ page }) => {
     await gotoStory(page, 'surfaces-featurecard--role');
     await expect(page.locator('.su-feature-card__label')).toHaveCSS('color', COLOR.cyan);
-    const smallTitle = await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).fontSize) * 1.35);
-    await expect(page.locator('.su-feature-card__title')).toHaveCSS('font-size', `${String(smallTitle)}px`);
+    const roleTitlePx = await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).fontSize) * 1.35);
+    await expect(page.locator('.su-feature-card__title')).toHaveCSS('font-size', `${String(roleTitlePx)}px`);
     await expect(page.locator('.su-feature-card')).toHaveCSS('border-left-color', COLOR.cyan);
   });
 

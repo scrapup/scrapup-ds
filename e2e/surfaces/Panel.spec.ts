@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { expectNoA11yViolations } from '../support/a11y';
-import { COLOR } from '../support/colors';
+import { COLOR, NEON_GLOW } from '../support/colors';
 import { gotoStory } from '../support/story';
 import { describeVisualBaselines } from '../support/visual';
 
@@ -17,14 +17,14 @@ test.describe('Surfaces/Panel', () => {
     await gotoStory(page, 'surfaces-panel--strong');
     const panel = page.locator('.su-panel');
     await expect(panel).toHaveCSS('padding', '42px');
-    await expect(panel).toHaveCSS('box-shadow', /color\(srgb 1 0\.478431 0\.2/);
+    await expect(panel).toHaveCSS('box-shadow', NEON_GLOW);
   });
 
   test('draws the edge variant with a solid accent border and glow', async ({ page }) => {
     await gotoStory(page, 'surfaces-panel--edge');
     const panel = page.locator('.su-panel');
     await expect(panel).toHaveCSS('border-top-color', COLOR.neon);
-    await expect(panel).toHaveCSS('box-shadow', /color\(srgb 1 0\.478431 0\.2/);
+    await expect(panel).toHaveCSS('box-shadow', NEON_GLOW);
   });
 
   test('draws the dashed "not ours / not yet" border', async ({ page }) => {

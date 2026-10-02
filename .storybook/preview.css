@@ -48,8 +48,6 @@ body {
   padding: var(--space-9) var(--container-pad-x);
 }
 
-.sb-story-copy-tight {
-  margin: 0;
-  color: var(--text-body);
-  font-family: var(--font-body);
+.sb-story-copy--tight {
+  padding: 0;
 }

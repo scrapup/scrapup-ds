@@ -22,6 +22,12 @@ describe('StatementList', () => {
     expect(container.querySelector('.su-statement-list__number')?.textContent).toBe('01');
   });
 
+  it('accepts rich statements', () => {
+    render(<StatementList items={[<em key="e">rich</em>, 'plain']} />);
+    expect(screen.getAllByRole('listitem')).toHaveLength(2);
+    expect(screen.getByText('rich').tagName).toBe('EM');
+  });
+
   it('appends className to the root', () => {
     expect(render(<StatementList className="extra" items={['a']} />).container.firstElementChild?.classList.contains('extra')).toBe(
       true,

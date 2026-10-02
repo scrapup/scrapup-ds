@@ -22,9 +22,17 @@ describe('FeatureCard', () => {
 
   it('falls back to the neon label tone (D-05) and omits empty slots (D-07)', () => {
     const { container } = render(<FeatureCard label="X" labelTone={'pink' as never} title="T" />);
-    expect(container.querySelector('.su-feature-card__label--neon')).not.toBeNull();
+    expect(container.querySelector('.su-feature-card__label')?.className).toBe(
+      'su-feature-card__label su-feature-card__label--neon',
+    );
     expect(container.querySelector('.su-feature-card__index')).toBeNull();
     expect(container.querySelector('.su-feature-card__body')).toBeNull();
+  });
+
+  it('shows the index, not the label, when both are given', () => {
+    const { container } = render(<FeatureCard index="01" label="ROLE" title="T" />);
+    expect(container.querySelector('.su-feature-card__label')).toBeNull();
+    expect(container.querySelector('.su-feature-card__index')?.textContent).toBe('01');
   });
 
   it('passes the accent edge to the panel and appends className', () => {

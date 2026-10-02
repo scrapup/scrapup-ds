@@ -35,7 +35,7 @@
   font-size: var(--type-role-title);
 }
 
-.su-feature-card > :not(:first-child).su-feature-card__title {
+.su-feature-card > .su-feature-card__title:not(:first-child) {
   margin-top: var(--space-3);
 }
 

@@ -9,3 +9,8 @@ function isOneOf<T extends string>(value: unknown, allowed: readonly T[]): value
 export function resolveOption<T extends string>(value: unknown, allowed: readonly T[], fallback: T): T {
   return isOneOf(value, allowed) ? value : fallback;
 }
+
+/** Like resolveOption for optional enums without a default: unknown values become undefined (D-05). */
+export function pickOption<T extends string>(value: unknown, allowed: readonly T[]): T | undefined {
+  return isOneOf(value, allowed) ? value : undefined;
+}

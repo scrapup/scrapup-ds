@@ -16,8 +16,11 @@ export function StatementList({ items, className }: StatementListProps): React.J
   return (
     <ol className={cx('su-statement-list', className)}>
       {statements.map((statement, index) => (
-        // Statements are positional (numbered), so the index is their identity.
-        <li className="su-statement-list__item" key={String(index)}>
+        // Statements are positional (numbered): index first, text when available (FlowLine pattern).
+        <li
+          className="su-statement-list__item"
+          key={typeof statement === 'string' ? `${String(index)}-${statement}` : String(index)}
+        >
           <span aria-hidden="true" className="su-statement-list__number">
             {String(index + 1).padStart(2, '0')}
           </span>

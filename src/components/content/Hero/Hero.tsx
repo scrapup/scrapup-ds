@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { cx } from '../../../lib/cx';
 import { hasContent } from '../../../lib/hasContent';
-import { splitHighlight } from '../../../lib/splitHighlight';
+import { renderHighlight } from '../../../lib/renderHighlight';
 import { Callout } from '../Callout';
 import { StatusPill } from '../StatusPill';
 import './Hero.css';
@@ -24,7 +24,6 @@ export interface HeroProps {
 
 /** Page hero: status, kicker, h1 with a glowing highlight, lead, callout and actions. */
 export function Hero({ status, kicker, title, highlight, lead, callout, actions, className }: HeroProps): React.JSX.Element {
-  const parts = splitHighlight(title, highlight);
   return (
     <div className={cx('su-hero', className)}>
       {hasContent(status) && (
@@ -34,15 +33,7 @@ export function Hero({ status, kicker, title, highlight, lead, callout, actions,
       )}
       {hasContent(kicker) && <p className="su-hero__kicker">{kicker}</p>}
       <h1 className="su-hero__title">
-        {parts ? (
-          <>
-            {parts[0]}
-            <span className="su-hero__highlight">{parts[1]}</span>
-            {parts[2]}
-          </>
-        ) : (
-          title
-        )}
+        {renderHighlight(title, highlight, 'su-hero__highlight')}
       </h1>
       {hasContent(lead) && <p className="su-hero__lead">{lead}</p>}
       {hasContent(callout) && (

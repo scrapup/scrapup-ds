@@ -18,3 +18,6 @@ export const COLOR = {
   paperInk: 'rgb(26, 23, 20)',
   transparent: 'rgba(0, 0, 0, 0)',
 } as const;
+
+/** Prefix of any color-mix() glow derived from the neon accent (Chromium srgb serialization). */
+export const NEON_GLOW = /color\(srgb 1 0\.478431 0\.2/;

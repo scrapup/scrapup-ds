@@ -21,6 +21,9 @@ describe('ValueStatement', () => {
   it('omits the note and renders nothing without pairs (D-07)', () => {
     expect(render(<ValueStatement pairs={PAIRS} />).container.querySelector('.su-value-statement__note')).toBeNull();
     expect(render(<ValueStatement pairs={[]} />).container.firstElementChild).toBeNull();
+    expect(render(<ValueStatement pairs={[['', 'over x.']]} />).container.firstElementChild).toBeNull();
+    const { container } = render(<ValueStatement pairs={[['', 'x'], ['Kept', 'row.']]} />);
+    expect(container.querySelectorAll('.su-value-statement__row')).toHaveLength(1);
   });
 
   it('appends className to the root', () => {

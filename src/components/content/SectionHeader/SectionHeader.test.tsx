@@ -25,11 +25,23 @@ describe('SectionHeader', () => {
     );
   });
 
+  it('wraps exactly one highlight span when the term repeats', () => {
+    const { container } = render(<SectionHeader highlight="seal" title="seal and seal" />);
+    const marks = container.querySelectorAll('.su-section-header__highlight');
+    expect(marks).toHaveLength(1);
+    expect(marks[0]?.textContent).toBe('seal');
+  });
+
   it('highlights the first match or renders the plain title', () => {
     const { container, rerender } = render(<SectionHeader highlight="milestones" title="Four milestones" />);
     expect(container.querySelector('.su-section-header__highlight')?.textContent).toBe('milestones');
     rerender(<SectionHeader highlight="absent" title="Four milestones" />);
     expect(container.querySelector('.su-section-header__highlight')).toBeNull();
+  });
+
+  it('drops the index when there is no eyebrow', () => {
+    const { container } = render(<SectionHeader index="02" title="t" />);
+    expect(container.textContent).toBe('t');
   });
 
   it('omits empty slots (D-07) and appends className', () => {
