@@ -1,0 +1,62 @@
+/* Ported 1:1 from the scrapup design project (tokens/colors.css). Values change only via the parity fixture. */
+:root {
+  /* Ink (backgrounds, darkest → lighter) */
+  --su-ink-0: #07090E;   /* footer band */
+  --su-ink-1: #0A0D15;   /* page background */
+  --su-ink-2: #121622;   /* avatar / icon top */
+  --su-ink-3: #141A28;   /* panel top (rgba(20,26,40)) */
+  --su-ink-4: #0E121C;   /* panel bottom (rgba(14,18,28)) */
+
+  /* Foreground ramp on ink */
+  --su-fg-1: #F2F3F8;    /* headlines */
+  --su-fg-2: #ECEEF4;    /* titles, strong, wordmark "scrap" */
+  --su-fg-3: #C7CCD8;    /* emphasized body / lead */
+  --su-fg-4: #AEB4C2;    /* body */
+  --su-fg-5: #8A90A0;    /* secondary body */
+  --su-fg-6: #7E8597;    /* meta labels, struck values */
+  --su-fg-7: #5A6172;    /* footer meta */
+  --su-fg-faint: rgba(190,200,220,.4);  /* citations */
+  --su-fg-dim: rgba(190,200,220,.5);    /* terminal hints */
+
+  /* Signal */
+  --su-neon: #FF7A33;        /* Neon forge — primary accent ("up") */
+  --su-neon-light: #E8641F;  /* Forge on paper */
+  --su-cyan: #35E6E0;        /* secondary / structural accent */
+  --su-violet: #B388FF;      /* ambient glow only */
+  --su-magenta: #FF3DA6;     /* glitch channel only */
+  --su-pink: #FF3D9A;        /* alternate accent option */
+
+  /* Lines (cyan-tinted hairlines) */
+  --su-line-faint: rgba(120,190,210,.10);
+  --su-line-soft: rgba(120,190,210,.12);
+  --su-line: rgba(120,190,210,.16);
+  --su-line-dashed: rgba(120,190,210,.28);
+  --su-line-strong: rgba(120,190,210,.30);
+  --su-line-input: rgba(120,190,210,.32);
+
+  /* Paper (light inverse — logo use) */
+  --su-paper: #F2F0EA;
+  --su-paper-ink: #1A1714;
+
+  /* Semantic aliases */
+  --accent: var(--su-neon);
+  --accent-2: var(--su-cyan);
+  --surface-page: var(--su-ink-1);
+  --surface-footer: var(--su-ink-0);
+  --surface-panel: linear-gradient(180deg, rgba(20,26,40,.55), rgba(14,18,28,.55));
+  --surface-panel-strong: linear-gradient(180deg, rgba(20,26,40,.82), rgba(14,18,28,.82));
+  --surface-input: rgba(10,14,22,.6);
+  --surface-accent-tint: color-mix(in srgb, var(--accent) 10%, transparent);
+  --surface-cyan-tint: rgba(53,230,224,.07);
+  --text-heading: var(--su-fg-1);
+  --text-title: var(--su-fg-2);
+  --text-lead: var(--su-fg-3);
+  --text-body: var(--su-fg-4);
+  --text-muted: var(--su-fg-5);
+  --text-meta: var(--su-fg-6);
+  --text-on-accent: var(--su-ink-1);
+  --border-default: var(--su-line);
+  --border-subtle: var(--su-line-soft);
+  --border-strong: var(--su-line-strong);
+  --selection: rgba(53,230,224,.28);
+}

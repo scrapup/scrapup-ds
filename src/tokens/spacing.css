@@ -1,0 +1,27 @@
+/* Ported 1:1 from the scrapup design project (tokens/spacing.css). Values change only via the parity fixture. */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 10px;
+  --space-4: 14px;
+  --space-5: 18px;   /* card grid gap */
+  --space-6: 22px;
+  --space-7: 24px;   /* card padding */
+  --space-8: 30px;
+  --space-9: 42px;   /* strong panel padding */
+  --space-10: 64px;  /* hero top */
+  --space-section: 108px;  /* between landing sections (manifesto: 104px) */
+
+  --container-max: 1180px;
+  --container-pad-x: 48px;
+  --measure-body: 640px;
+  --measure-lead: 580px;
+
+  /* Corners are square. Radii exist only for app icons / avatars. */
+  --radius-none: 0;
+  --radius-dot: 50%;
+  --radius-icon-sm: 9px;
+  --radius-icon-md: 14px;
+  --radius-icon-lg: 24px;
+  --radius-avatar: 64px;
+}

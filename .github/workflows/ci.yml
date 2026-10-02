@@ -40,6 +40,10 @@ jobs:
         if: ${{ !cancelled() }}
         run: node scripts/coverage-summary.mjs >> "$GITHUB_STEP_SUMMARY"
       - run: npm run build
+      - name: Build output contract
+        run: npx vitest run test/build-output.test.ts
+        env:
+          REQUIRE_DIST: '1'
       - run: npm run size
       - run: npm run build-storybook
 

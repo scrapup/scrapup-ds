@@ -1,0 +1,8 @@
+/* Ported 1:1 from the scrapup design project (tokens/base.css). Values change only via the parity fixture. */
+*,*::before,*::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: var(--surface-page); color: var(--text-title); font-family: var(--font-body); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+::selection { background: var(--selection); color: #fff; }
+input::placeholder { color: rgba(184,190,204,.34); }
+a { color: var(--su-cyan); text-decoration: none; }
+a:hover { color: var(--accent); }
