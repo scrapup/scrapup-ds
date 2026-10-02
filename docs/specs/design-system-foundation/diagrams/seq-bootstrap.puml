@@ -25,7 +25,7 @@ end
 == TF-81-03 Rulesets (step 1) ==
 Maintainer -> API : POST rulesets main-review\n(1 code-owner approval; admin bypass at PR merge)
 Maintainer -> API : POST rulesets main-integrity\n(validate + dependency-review; linear; no bypass)
-Maintainer -> API : POST rulesets release-tags (v*: Actions only)
+Maintainer -> API : POST rulesets release-tags (v*: no update/delete)
 alt direct push to main
   Maintainer -> Repo : git push main
   Repo --> Maintainer : rejected
