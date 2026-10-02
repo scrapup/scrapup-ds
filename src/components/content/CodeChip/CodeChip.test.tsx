@@ -18,6 +18,11 @@ describe('CodeChip', () => {
     expect(hint?.nextElementSibling?.tagName).toBe('CODE');
   });
 
+  it('omits an empty hint (D-07)', () => {
+    const { container } = render(<CodeChip hint="">x</CodeChip>);
+    expect(container.querySelector('.su-code-chip__hint')).toBeNull();
+  });
+
   it('renders nothing without code (D-07) and appends className', () => {
     expect(render(<CodeChip hint="x" />).container.firstElementChild).toBeNull();
     expect(render(<CodeChip className="extra">x</CodeChip>).container.firstElementChild?.className).toBe(

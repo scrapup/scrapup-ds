@@ -14,7 +14,7 @@ describe('TopBar', () => {
     render(<TopBar />);
     const header = screen.getByRole('banner');
     expect(header.className).toBe('su-top-bar');
-    expect(screen.getByRole('img', { name: 'scrapup' })).not.toBeNull();
+    screen.getByRole('img', { name: 'scrapup' });
     expect(header.querySelector('.su-top-bar__tagline')?.textContent).toBe('AI-assisted Unified Process');
     const repo = screen.getByRole('link', { name: /github\.com\/scrapup/ });
     expect(repo.getAttribute('href')).toBe('https://github.com/scrapup/scrapup');
@@ -38,6 +38,28 @@ describe('TopBar', () => {
     const docs = screen.getByRole('link', { name: 'DOCS' });
     expect(docs.hasAttribute('aria-current')).toBe(false);
     expect(docs.getAttribute('target')).toBe('_blank');
+  });
+
+  it('matches active against a stable id when labels are localized', () => {
+    render(<TopBar active="manifesto" links={[{ id: 'manifesto', label: 'MANIFESTO PT', href: '/pt/manifesto' }]} />);
+    expect(screen.getByRole('link', { name: 'MANIFESTO PT' }).getAttribute('aria-current')).toBe('page');
+  });
+
+  it('skips links without a label (D-07)', () => {
+    render(<TopBar links={[{ label: '', href: '/x' }, ...LINKS]} />);
+    expect(screen.getAllByRole('link', { name: /MANIFESTO|DOCS/ })).toHaveLength(2);
+    expect(document.querySelectorAll('.su-top-bar__link')).toHaveLength(2);
+  });
+
+  it('neutralizes unsafe schemes in every link (D-06)', () => {
+    render(
+      <TopBar
+        homeHref="javascript:alert(1)"
+        links={[{ label: 'X', href: 'javascript:alert(1)' }]}
+        repoHref="javascript:alert(1)"
+      />,
+    );
+    for (const link of screen.getAllByRole('link')) expect(link.getAttribute('href')).toBe('#');
   });
 
   it('marks no link active when active matches none', () => {

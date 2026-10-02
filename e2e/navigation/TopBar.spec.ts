@@ -46,6 +46,7 @@ test.describe('Navigation/TopBar', () => {
     await expect(repo).toHaveAttribute('rel', 'noopener noreferrer');
   });
 
+  // AllVariants stacks several <header>/<nav> landmarks (landmark rules); audit the fullest bar instead.
   test('has no critical or serious a11y violations', async ({ page }) => {
     await gotoStory(page, 'navigation-topbar--with-language');
     await expectNoA11yViolations(page);

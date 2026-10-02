@@ -25,7 +25,7 @@ export const AllVariants: Story = {
     <div className="sb-story-stack sb-story-stack--wide">
       <Footer links={[{ label: 'github', href: 'https://github.com/scrapup' }]} />
       <Footer />
-      <Footer author="" items={['scrapup.dev']} />
+      <Footer author="" items={['scrapup.dev']} links={[{ label: 'privacy', onClick: () => undefined }]} />
     </div>
   ),
 };

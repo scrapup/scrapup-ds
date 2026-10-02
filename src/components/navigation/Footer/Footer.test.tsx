@@ -39,6 +39,12 @@ describe('Footer', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
+  it('skips empty items and repeats duplicate items without key clashes (D-07)', () => {
+    const { container } = render(<Footer items={['', 'a', 'a']} />);
+    expect([...container.querySelectorAll('.su-footer__item')].map((item) => item.textContent)).toEqual(['a', 'a']);
+    expect(container.querySelectorAll('.su-footer__separator')).toHaveLength(1);
+  });
+
   it('omits empty items, links and author (D-07)', () => {
     const { container } = render(<Footer author="" items={[]} />);
     expect(container.querySelector('.su-footer__item')).toBeNull();

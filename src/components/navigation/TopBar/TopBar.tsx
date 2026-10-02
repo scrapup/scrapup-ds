@@ -1,23 +1,29 @@
 import { LangSwitch } from '../../actions/LangSwitch';
+import type { LangSwitchProps } from '../../actions/LangSwitch';
 import { Wordmark } from '../../brand/Wordmark';
 import { cx } from '../../../lib/cx';
 import { externalLinkProps } from '../../../lib/externalLinkProps';
 import { hasContent } from '../../../lib/hasContent';
 import { NavItem } from '../NavItem';
+import { navLinkKey } from '../types';
 import type { NavLink } from '../types';
 import './TopBar.css';
+
+const DEFAULT_TAGLINE = 'AI-assisted Unified Process';
+const DEFAULT_REPO = 'github.com/scrapup';
+const DEFAULT_REPO_HREF = 'https://github.com/scrapup/scrapup';
 
 export interface TopBarProps {
   /** Mono line next to the wordmark. Default "AI-assisted Unified Process"; '' omits it. */
   tagline?: string;
   /** Uppercase navigation links. Empty → no <nav>. */
   links?: readonly NavLink[];
-  /** Label of the current page's link (aria-current="page"). */
+  /** Identity (id, or label) of the current page's link (aria-current="page"). */
   active?: string;
   /** Active language for the switch. Default "EN". */
-  lang?: string;
+  lang?: LangSwitchProps['value'];
   /** Shows the language switch when given. */
-  onLang?: (lang: string) => void;
+  onLang?: LangSwitchProps['onChange'];
   /** Repository label. Default "github.com/scrapup"; '' omits the link. */
   repo?: string;
   /** Repository URL. Default "https://github.com/scrapup/scrapup". */
@@ -29,16 +35,17 @@ export interface TopBarProps {
 
 /** Page header: wordmark + tagline, navigation, language switch and repository link. */
 export function TopBar({
-  tagline = 'AI-assisted Unified Process',
+  tagline = DEFAULT_TAGLINE,
   links = [],
   active,
   lang = 'EN',
   onLang,
-  repo = 'github.com/scrapup',
-  repoHref = 'https://github.com/scrapup/scrapup',
+  repo = DEFAULT_REPO,
+  repoHref = DEFAULT_REPO_HREF,
   homeHref,
   className,
 }: TopBarProps): React.JSX.Element {
+  const visibleLinks = links.filter((link) => hasContent(link.label));
   return (
     <header className={cx('su-top-bar', className)}>
       <div className="su-top-bar__brand">
@@ -46,15 +53,15 @@ export function TopBar({
         {hasContent(tagline) && <span className="su-top-bar__tagline">{tagline}</span>}
       </div>
       <div className="su-top-bar__actions">
-        {links.length > 0 && (
+        {visibleLinks.length > 0 && (
           <nav aria-label="Main" className="su-top-bar__nav">
-            {links.map((link) => {
-              const isActive = link.label === active;
+            {visibleLinks.map((link, index) => {
+              const isActive = active !== undefined && navLinkKey(link) === active;
               return (
                 <NavItem
                   className={cx('su-top-bar__link', isActive && 'su-top-bar__link--active')}
                   current={isActive}
-                  key={link.label}
+                  key={`${String(index)}-${navLinkKey(link)}`}
                   link={link}
                 />
               );

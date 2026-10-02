@@ -23,13 +23,16 @@
      and .55 (FlowLine) are raised to .6, the minimum that meets WCAG AA 4.5:1 on ink (plan §3.2). */
   --su-fg-footer: #9AA0B0;
   --su-fg-hint: rgba(190,200,220,.6);
-  --su-fg-flow: rgba(190,200,220,.6);
+  --su-fg-flow: var(--su-fg-hint);
 
   /* Wordmark on paper: neon-light "up" glow */
   --glow-text-mark-light: 0 0 16px color-mix(in srgb, var(--su-neon-light) 35%, transparent);
 
   /* Active underline (LangSwitch, TopBar links) */
   --glow-underline: 0 0 10px color-mix(in srgb, var(--accent) 70%, transparent);
+
+  /* Meta tracking (TopBar repo link, Footer) */
+  --tracking-meta: .04em;
 
   /* Focus ring for interactive components */
   --focus-ring: 2px solid var(--su-cyan);

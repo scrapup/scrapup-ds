@@ -41,7 +41,7 @@ export const AllVariants: Story = {
     <div className="sb-story-stack sb-story-stack--wide">
       <TopBar active="MANIFESTO" homeHref="#" links={LINKS} />
       <TopBar homeHref="#" lang="PT" links={LINKS} onLang={() => undefined} />
-      <TopBar links={[]} repo="" tagline="" />
+      <TopBar links={[{ label: 'WAITLIST', onClick: () => undefined }]} repo="" tagline="" />
     </div>
   ),
 };

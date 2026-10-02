@@ -67,7 +67,7 @@
   color: var(--su-cyan);
   font-family: var(--font-mono);
   font-size: var(--type-mono-nav);
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-meta);
   text-decoration: none;
 }
 

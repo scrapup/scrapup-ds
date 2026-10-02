@@ -283,8 +283,8 @@ Per-component contract (defaults in **bold**):
 | Backdrop | `label?`; `site?` (**"SCRAPUP.DEV"**); `marks?` (**true**); `scanlines?` (**true**); `fullHeight?` (false — replaces `style={{minHeight:'100vh'}}`); `children`; `className?` |
 | Button | `variant?: **'primary'** \| 'secondary' \| 'link'`; `size?: **'md'** \| 'sm'`; `icon?`; `href?` (→ `<a>`) ; `onClick?`; `type?: **'button'** \| 'submit'`; `children`; `aria-label?` (icon-only buttons); `disabled?`; `className?` |
 | LangSwitch | `value?` (**'EN'**); `options?` (**['EN','PT','JA']**); `onChange?(lang)`; `label?` (**'Language'**, group accessible name); buttons with `aria-pressed` |
-| TopBar | `tagline?`; `links?: {label, href?, onClick?}[]`; `active?`; `lang?`; `onLang?` (omit → no switch); `repo?`; `repoHref?`; `homeHref?` |
-| Footer | `items?: string[]`; `links?: {label, href?, onClick?}[]`; `author?` |
+| TopBar | `tagline?`; `links?: NavLink[]` (`{label, id?, href, onClick?} \| {label, id?, onClick}`); `active?` (matches `id ?? label`); `lang?`; `onLang?` (omit → no switch); `repo?`; `repoHref?`; `homeHref?` |
+| Footer | `items?: string[]`; `links?: NavLink[]`; `author?` |
 | Hero | `status?`; `kicker?`; `title` (required); `highlight?`; `lead?`; `callout?`; `actions?` |
 | SectionHeader | `index?`; `eyebrow?`; `title` (required); `highlight?`; `body?`; `size?: **'md'** \| 'xl'`; `bar?` |
 | Eyebrow | `index?`; `tone?: **'cyan'** \| 'neon' \| 'muted'`; `children`; `className?` |

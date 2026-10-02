@@ -25,6 +25,17 @@ describe('FlowLine', () => {
     expect(container.querySelector('.su-flow-line__arrow')).toBeNull();
   });
 
+  it('keeps repeated steps and highlights only the last', () => {
+    const { container } = render(<FlowLine steps={['scrap', 'scrap']} />);
+    expect(container.textContent).toBe('scrap → scrap');
+    expect(container.querySelectorAll('.su-flow-line__step--last')).toHaveLength(1);
+  });
+
+  it('skips empty steps (D-07)', () => {
+    const { container } = render(<FlowLine steps={['', 'a', '']} />);
+    expect(container.textContent).toBe('a');
+  });
+
   it('renders nothing without steps (D-07) and appends className', () => {
     expect(render(<FlowLine steps={[]} />).container.firstElementChild).toBeNull();
     expect(render(<FlowLine className="extra" />).container.firstElementChild?.className).toBe('su-flow-line extra');

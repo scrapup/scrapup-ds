@@ -16,6 +16,11 @@ describe('Eyebrow', () => {
     expect(container.querySelector('.su-eyebrow__index')?.textContent).toBe('// 02 — ');
   });
 
+  it('omits the prefix for an empty index (D-07)', () => {
+    const { container } = render(<Eyebrow index="">intro</Eyebrow>);
+    expect(container.textContent).toBe('intro');
+  });
+
   it('accepts a numeric index, including 0', () => {
     const { container } = render(<Eyebrow index={0}>intro</Eyebrow>);
     expect(container.textContent).toBe('// 0 — intro');

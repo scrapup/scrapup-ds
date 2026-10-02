@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { cx } from '../../../lib/cx';
+import { hasContent } from '../../../lib/hasContent';
 import './FlowLine.css';
 
 const DEFAULT_STEPS = ['scrap', 'forge', 'forged delivery'] as const;
@@ -12,11 +13,12 @@ export interface FlowLineProps {
 
 /** One-line process flow, e.g. "scrap → forge → forged delivery". */
 export function FlowLine({ steps = DEFAULT_STEPS, className }: FlowLineProps): React.JSX.Element | null {
-  if (steps.length === 0) return null;
-  const lastIndex = steps.length - 1;
+  const visibleSteps = steps.filter((step) => hasContent(step));
+  if (visibleSteps.length === 0) return null;
+  const lastIndex = visibleSteps.length - 1;
   return (
     <p className={cx('su-flow-line', className)}>
-      {steps.map((step, index) => (
+      {visibleSteps.map((step, index) => (
         // Steps may repeat, so the position is part of the key.
         <Fragment key={`${String(index)}-${step}`}>
           {index > 0 && (
