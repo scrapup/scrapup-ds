@@ -1,4 +1,5 @@
 import { cx } from '../../../lib/cx';
+import { resolveOption } from '../../../lib/resolveOption';
 import './LangSwitch.css';
 
 const DEFAULT_OPTIONS = ['EN', 'PT', 'JA'] as const;
@@ -10,6 +11,8 @@ export interface LangSwitchProps {
   options?: readonly string[];
   /** Called with the chosen option. */
   onChange?: (lang: string) => void;
+  /** Accessible name of the group (localize it). Default "Language". */
+  label?: string;
   className?: string;
 }
 
@@ -18,12 +21,14 @@ export function LangSwitch({
   value = 'EN',
   options = DEFAULT_OPTIONS,
   onChange,
+  label = 'Language',
   className,
 }: LangSwitchProps): React.JSX.Element | null {
-  if (options.length === 0) return null;
-  const active = options.includes(value) ? value : options[0];
+  const [first] = options;
+  if (first === undefined) return null;
+  const active = resolveOption(value, options, first);
   return (
-    <div aria-label="Language" className={cx('su-lang-switch', className)} role="group">
+    <div aria-label={label} className={cx('su-lang-switch', className)} role="group">
       {options.map((option) => {
         const isActive = option === active;
         return (

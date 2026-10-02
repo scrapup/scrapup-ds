@@ -4,7 +4,7 @@ import { externalLinkProps } from './externalLinkProps';
 const EXTERNAL = { target: '_blank', rel: 'noopener noreferrer' } as const;
 
 describe('externalLinkProps', () => {
-  it.each(['https://scrapup.dev', 'HTTP://example.com', '//cdn.example.com/x', '  https://scrapup.dev'])(
+  it.each(['https://scrapup.dev', 'HTTP://example.com', '//cdn.example.com/x', '  https://scrapup.dev', '/\\evil.example', 'https:evil.example'])(
     'opens external link %j in a new tab without opener (D-06)',
     (href) => {
       expect(externalLinkProps(href)).toEqual({ href, ...EXTERNAL });

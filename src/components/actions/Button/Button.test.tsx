@@ -52,11 +52,29 @@ describe('Button', () => {
     expect(icon?.nextElementSibling?.className).toBe('su-button__label');
   });
 
-  it('omits empty slots (D-07)', () => {
-    const { container } = render(<Button icon="←" />);
+  it('omits an empty label and names an icon-only button through aria-label (D-07)', () => {
+    const { container } = render(<Button aria-label="Back" icon="←" />);
     expect(container.querySelector('.su-button__label')).toBeNull();
-    expect(container.querySelector('.su-button__icon')?.textContent).toBe('←');
-    expect(container.textContent).not.toContain('undefined');
+    expect(container.textContent).toBe('←');
+    expect(screen.getByRole('button', { name: 'Back' })).not.toBeNull();
+  });
+
+  it.each([undefined, ''])('omits the icon slot when icon is %j (D-07)', (icon) => {
+    const { container } = render(<Button icon={icon}>GO</Button>);
+    expect(container.querySelector('.su-button__icon')).toBeNull();
+  });
+
+  it('disables the native button', async () => {
+    const onClick = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <Button disabled onClick={onClick}>
+        SEND
+      </Button>,
+    );
+    await user.click(screen.getByRole('button'));
+    expect(screen.getByRole('button')).toHaveProperty('disabled', true);
+    expect(onClick).not.toHaveBeenCalled();
   });
 
   it('renders an external link with safe attributes (D-06)', () => {
@@ -67,11 +85,26 @@ describe('Button', () => {
     expect(link.hasAttribute('type')).toBe(false);
   });
 
-  it('renders an internal link without target and neutralizes script URLs', () => {
-    const { rerender } = render(<Button href="/manifesto">MANIFESTO</Button>);
+  it('renders an internal link without target', () => {
+    render(<Button href="/manifesto">MANIFESTO</Button>);
     expect(screen.getByRole('link').hasAttribute('target')).toBe(false);
-    rerender(<Button href="javascript:alert(1)">BAD</Button>);
+  });
+
+  it('neutralizes script URLs to "#"', () => {
+    render(<Button href="javascript:alert(1)">BAD</Button>);
     expect(screen.getByRole('link').getAttribute('href')).toBe('#');
+  });
+
+  it('calls onClick on links too', async () => {
+    const onClick = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <Button href="/" onClick={onClick}>
+        HOME
+      </Button>,
+    );
+    await user.click(screen.getByRole('link'));
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 
   it('appends className to the root', () => {

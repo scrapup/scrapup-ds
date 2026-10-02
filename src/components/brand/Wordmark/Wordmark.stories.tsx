@@ -25,7 +25,7 @@ export const OnPaper: Story = {
   args: { tone: 'light', flicker: false },
   decorators: [
     (Story) => (
-      <div className="su-story-paper">
+      <div className="sb-story-paper">
         <Story />
       </div>
     ),
@@ -36,12 +36,12 @@ export const Link: Story = { args: { href: '/' } };
 
 export const AllVariants: Story = {
   render: () => (
-    <div className="su-story-stack">
+    <div className="sb-story-stack">
       <Wordmark flicker={false} size="xs" />
       <Wordmark flicker={false} size="sm" />
       <Wordmark flicker={false} size="md" />
       <Wordmark flicker={false} size="xl" />
-      <div className="su-story-paper">
+      <div className="sb-story-paper">
         <Wordmark flicker={false} tone="light" />
       </div>
     </div>

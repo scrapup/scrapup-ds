@@ -27,6 +27,10 @@ export interface ButtonProps {
   type?: ButtonType;
   /** UPPERCASE label, e.g. "STAR ON GITHUB", "READ THE DOCS ↗". */
   children?: ReactNode;
+  /** Accessible name; required when the button shows only an icon. */
+  'aria-label'?: string;
+  /** Disables the native button (ignored with href). */
+  disabled?: boolean;
   className?: string;
 }
 
@@ -39,6 +43,8 @@ export function Button({
   onClick,
   type,
   children,
+  'aria-label': ariaLabel,
+  disabled,
   className,
 }: ButtonProps): React.JSX.Element {
   const classes = cx(
@@ -61,13 +67,19 @@ export function Button({
   );
   if (href) {
     return (
-      <a className={classes} onClick={onClick} {...externalLinkProps(href)}>
+      <a aria-label={ariaLabel} className={classes} onClick={onClick} {...externalLinkProps(href)}>
         {content}
       </a>
     );
   }
   return (
-    <button className={classes} onClick={onClick} type={resolveOption(type, TYPES, 'button')}>
+    <button
+      aria-label={ariaLabel}
+      className={classes}
+      disabled={disabled}
+      onClick={onClick}
+      type={resolveOption(type, TYPES, 'button')}
+    >
       {content}
     </button>
   );

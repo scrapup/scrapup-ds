@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { expectNoA11yViolations } from '../support/a11y';
+import { COLOR } from '../support/colors';
 import { gotoStory } from '../support/story';
 import { describeVisualBaselines } from '../support/visual';
 
@@ -12,7 +13,7 @@ test.describe('Actions/LangSwitch', () => {
       const style = getComputedStyle(element, '::after');
       return { background: style.backgroundColor, height: style.height };
     });
-    expect(underline).toEqual({ background: 'rgb(255, 122, 51)', height: '2px' });
+    expect(underline).toEqual({ background: COLOR.neon, height: '2px' });
     const inactive = await page
       .getByRole('button', { name: 'EN' })
       .evaluate((element) => getComputedStyle(element, '::after').content);
@@ -32,13 +33,16 @@ test.describe('Actions/LangSwitch', () => {
     await expect(page.getByTestId('current-lang')).toHaveText('JA');
   });
 
-  test('keeps square segments and the cyan focus ring', async ({ page }) => {
+  test('keeps square segments and shows the cyan focus ring', async ({ page }) => {
     await gotoStory(page, 'actions-langswitch--default');
-    await expect(page.locator('.su-lang-switch')).toHaveCSS('border-radius', '0px');
+    for (const name of ['EN', 'PT', 'JA']) {
+      await expect(page.getByRole('button', { name })).toHaveCSS('border-radius', '0px');
+    }
     await page.keyboard.press('Tab');
     const focused = page.getByRole('button', { name: 'EN' });
     await expect(focused).toBeFocused();
-    await expect(focused).toHaveCSS('outline-color', 'rgb(53, 230, 224)');
+    await expect(focused).toHaveCSS('outline-style', 'solid');
+    await expect(focused).toHaveCSS('outline-color', COLOR.cyan);
   });
 
   test('has no critical or serious a11y violations', async ({ page }) => {

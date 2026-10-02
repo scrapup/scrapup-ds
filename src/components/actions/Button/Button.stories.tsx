@@ -16,7 +16,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {};
+export const Default: Story = {};
 
 export const Secondary: Story = { args: { variant: 'secondary', icon: '★', children: 'STAR ON GITHUB' } };
 
@@ -30,7 +30,7 @@ export const External: Story = {
 
 export const AllVariants: Story = {
   render: () => (
-    <div className="su-story-row">
+    <div className="sb-story-row">
       <Button>JOIN THE WAITLIST ↗</Button>
       <Button size="sm">READ THE DOCS ↗</Button>
       <Button icon="★" variant="secondary">

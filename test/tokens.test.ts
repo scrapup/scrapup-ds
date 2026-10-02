@@ -8,6 +8,7 @@ const TOKENS_DIR = join(import.meta.dirname, '../src/tokens');
 const TOKEN_FILES = ['fonts', 'colors', 'typography', 'spacing', 'effects', 'base'];
 // … and tokens added by this package for values components used inline (plan §3.2).
 const EXTENSION_FILE = 'extensions';
+const ALL_TOKEN_FILES = [...TOKEN_FILES, EXTENSION_FILE];
 
 function read(name: string): string {
   return readFileSync(join(TOKENS_DIR, `${name}.css`), 'utf8');
@@ -37,7 +38,7 @@ const EXTENDED = declaredTokens([EXTENSION_FILE]);
 describe('token layer', () => {
   it('ships every token source file', () => {
     const files = readdirSync(TOKENS_DIR).map((name) => name.replace(/\.css$/, ''));
-    expect(files.sort()).toEqual([...TOKEN_FILES, EXTENSION_FILE].sort());
+    expect(files.sort()).toEqual([...ALL_TOKEN_FILES].sort());
   });
 
   it.each(Object.entries(fixture))('keeps %s with the design project value', (name, value) => {
@@ -53,14 +54,18 @@ describe('token layer', () => {
     for (const name of EXTENDED.keys()) expect(Object.keys(fixture)).not.toContain(name);
   });
 
-  it('derives every color-mix token from the accent (RN-09)', () => {
-    const mixed = [...DECLARED, ...EXTENDED].filter(([, value]) => value.includes('color-mix('));
+  it('derives extension colors from base tokens (no color literals)', () => {
+    for (const [name, value] of EXTENDED) expect([name, value]).not.toEqual([name, expect.stringMatching(/#|rgba?\(|hsla?\(/)]);
+  });
+
+  it('derives every ported color-mix token from the accent (RN-09)', () => {
+    const mixed = [...DECLARED].filter(([, value]) => value.includes('color-mix('));
     expect(mixed.length).toBeGreaterThan(0);
     for (const [name, value] of mixed) expect([name, value]).toEqual([name, expect.stringContaining('var(--accent)')]);
   });
 
   it('removes the prefers-reduced-motion override (OP-03)', () => {
-    for (const name of [...TOKEN_FILES, EXTENSION_FILE]) expect(read(name)).not.toMatch(/prefers-reduced-motion/);
+    for (const name of ALL_TOKEN_FILES) expect(read(name)).not.toMatch(/prefers-reduced-motion/);
   });
 
   it.each(['scrapupFlicker', 'scrapupGlitchC', 'scrapupGlitchM', 'scrapupGlitchSlice'])(

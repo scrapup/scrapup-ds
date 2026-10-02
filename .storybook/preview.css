@@ -4,36 +4,36 @@ body {
   background: var(--surface-page);
 }
 
-.su-story-stack {
+.sb-story-stack {
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
   align-items: flex-start;
 }
 
-.su-story-row {
+.sb-story-row {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-6);
   align-items: center;
 }
 
-.su-story-grid {
+.sb-story-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-5);
 }
 
-.su-story-grid > * {
+.sb-story-grid > * {
   min-height: 220px;
 }
 
-.su-story-paper {
+.sb-story-paper {
   padding: var(--space-6);
   background: var(--su-paper);
 }
 
-.su-story-copy {
+.sb-story-copy {
   margin: 0;
   padding: var(--space-9);
   color: var(--text-body);

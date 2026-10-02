@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { gotoStory } from './story';
 
 /**
@@ -12,7 +12,7 @@ export function skipVisualOutsideContainer(): void {
 /** Declares one visual-baseline test per story id (`<story-id>.png`). */
 export function describeVisualBaselines(storyIds: readonly string[]): void {
   for (const id of storyIds) {
-    test(`matches the visual baseline of ${id}`, async ({ page }: { page: Page }) => {
+    test(`matches the visual baseline of ${id}`, async ({ page }) => {
       skipVisualOutsideContainer();
       await gotoStory(page, id);
       await expect(page.locator('#storybook-root')).toHaveScreenshot(`${id}.png`);

@@ -8,7 +8,8 @@ describe('Wordmark', () => {
     const { container } = render(<Wordmark />);
     const root = container.firstElementChild;
     expect(root?.textContent).toBe('scrapup');
-    expect(root).toHaveProperty('className', 'su-wordmark su-wordmark--md su-wordmark--dark su-wordmark--flicker');
+    expect(root?.className).toBe('su-wordmark su-wordmark--md su-wordmark--dark su-wordmark--flicker');
+    expect(screen.getByRole('img', { name: 'scrapup' })).toBe(root);
     expect(container.querySelector('.su-wordmark__up')?.textContent).toBe('up');
   });
 
@@ -39,6 +40,14 @@ describe('Wordmark', () => {
     expect(link.getAttribute('target')).toBe('_blank');
     expect(link.getAttribute('rel')).toBe('noopener noreferrer');
     expect(link.querySelector('.su-wordmark')).not.toBeNull();
+  });
+
+  it('applies className to the link instead of the mark when href is set', () => {
+    render(<Wordmark className="custom" href="/" />);
+    const link = screen.getByRole('link', { name: 'scrapup' });
+    expect(link.className).toBe('su-wordmark-link custom');
+    expect(link.hasAttribute('target')).toBe(false);
+    expect(screen.getByRole('img', { name: 'scrapup' }).classList.contains('custom')).toBe(false);
   });
 
   it('appends className to the root', () => {

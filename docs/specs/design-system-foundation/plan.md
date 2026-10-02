@@ -279,8 +279,8 @@ Per-component contract (defaults in **bold**):
 |---|---|
 | Wordmark | `size?: 'xs'(11.5px) \| 'sm'(22px) \| **'md'(24px)** \| 'xl'(66px)`; `tone?: **'dark'** \| 'light'`; `flicker?: boolean` (**true**; RN-18); `href?`; `className?` |
 | Backdrop | `label?`; `site?` (**"SCRAPUP.DEV"**); `marks?` (**true**); `scanlines?` (**true**); `fullHeight?` (false — replaces `style={{minHeight:'100vh'}}`); `children`; `className?` |
-| Button | `variant?: **'primary'** \| 'secondary' \| 'link'`; `size?: **'md'** \| 'sm'`; `icon?`; `href?` (→ `<a>`) ; `onClick?`; `type?: **'button'** \| 'submit'`; `children`; `className?` |
-| LangSwitch | `value?` (**'EN'**); `options?` (**['EN','PT','JA']**); `onChange?(lang)`; buttons with `aria-pressed` |
+| Button | `variant?: **'primary'** \| 'secondary' \| 'link'`; `size?: **'md'** \| 'sm'`; `icon?`; `href?` (→ `<a>`) ; `onClick?`; `type?: **'button'** \| 'submit'`; `children`; `aria-label?` (icon-only buttons); `disabled?`; `className?` |
+| LangSwitch | `value?` (**'EN'**); `options?` (**['EN','PT','JA']**); `onChange?(lang)`; `label?` (**'Language'**, group accessible name); buttons with `aria-pressed` |
 | TopBar | `tagline?`; `links?: {label, href?, onClick?}[]`; `active?`; `lang?`; `onLang?` (omit → no switch); `repo?`; `repoHref?`; `homeHref?` |
 | Footer | `items?: string[]`; `links?: {label, href?, onClick?}[]`; `author?` |
 | Hero | `status?`; `kicker?`; `title` (required); `highlight?`; `lead?`; `callout?`; `actions?` |

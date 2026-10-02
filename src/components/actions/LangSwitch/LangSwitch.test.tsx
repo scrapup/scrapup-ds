@@ -52,6 +52,11 @@ describe('LangSwitch', () => {
     expect(container.firstElementChild).toBeNull();
   });
 
+  it('accepts a localized group label', () => {
+    render(<LangSwitch label="Idioma" />);
+    expect(screen.getByRole('group', { name: 'Idioma' })).not.toBeNull();
+  });
+
   it('appends className to the root', () => {
     render(<LangSwitch className="extra" />);
     expect(screen.getByRole('group').classList.contains('extra')).toBe(true);

@@ -29,6 +29,15 @@ describe('Backdrop', () => {
     expect(container.querySelector('.su-backdrop__frame')).toBeNull();
   });
 
+  it.each([
+    [true, false],
+    [false, true],
+  ])('toggles scanlines (%s) and marks (%s) independently', (scanlines, marks) => {
+    const { container } = render(<Backdrop marks={marks} scanlines={scanlines} />);
+    expect(container.querySelector('.su-backdrop__scanlines') !== null).toBe(scanlines);
+    expect(container.querySelector('.su-backdrop__frame') !== null).toBe(marks);
+  });
+
   it('omits empty labels (D-07)', () => {
     const { container } = render(<Backdrop label="" site="" />);
     expect(container.querySelector('.su-backdrop__site')).toBeNull();
