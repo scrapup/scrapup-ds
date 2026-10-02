@@ -18,6 +18,12 @@
   /* Accent borders (StatusPill, Tag neon) */
   --border-accent: color-mix(in srgb, var(--accent) 60%, transparent);
   --border-accent-soft: color-mix(in srgb, var(--accent) 40%, transparent);
+  --border-accent-faint: color-mix(in srgb, var(--accent) 24%, transparent);
+  --surface-accent-wash: color-mix(in srgb, var(--accent) 7%, transparent);
+
+  /* Text glows (SectionHeader xl, StatCard cyan) */
+  --glow-section-xl: 0 0 34px color-mix(in srgb, var(--su-cyan) 14%, transparent);
+  --glow-text-stat-cyan: 0 0 24px color-mix(in srgb, var(--su-cyan) 40%, transparent);
 
   /* Text inks used by the design components with no base token. The design's .45 (CodeChip hint)
      and .55 (FlowLine) are raised to .6, the minimum that meets WCAG AA 4.5:1 on ink (plan §3.2). */

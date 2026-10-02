@@ -11,6 +11,8 @@ export const COLOR = {
   fg4: 'rgb(174, 180, 194)',
   fg6: 'rgb(126, 133, 151)',
   textMuted: 'rgb(138, 144, 160)',
+  textHeading: 'rgb(242, 243, 248)',
+  lineStrong: 'rgba(120, 190, 210, 0.3)',
   footerInk: 'rgb(154, 160, 176)',
   footerBand: 'rgb(7, 9, 14)',
   paperInk: 'rgb(26, 23, 20)',

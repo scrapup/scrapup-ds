@@ -1,0 +1,47 @@
+.su-feature-card > * {
+  margin: 0;
+}
+
+.su-feature-card__index {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-nav);
+  text-shadow: var(--glow-text-index);
+}
+
+.su-feature-card__label {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-eyebrow);
+  letter-spacing: var(--tracking-label);
+}
+
+.su-feature-card__label--neon {
+  color: var(--accent);
+}
+
+.su-feature-card__label--cyan {
+  color: var(--su-cyan);
+}
+
+.su-feature-card__title {
+  color: var(--su-fg-2);
+  font-family: var(--font-display);
+  font-size: var(--type-card-title);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.su-feature-card--labelled .su-feature-card__title {
+  font-size: var(--type-role-title);
+}
+
+.su-feature-card > :not(:first-child).su-feature-card__title {
+  margin-top: var(--space-3);
+}
+
+.su-feature-card > .su-feature-card__body {
+  margin-top: 9px;
+  color: var(--text-muted);
+  font-size: var(--type-body-xs);
+  line-height: 1.5;
+}

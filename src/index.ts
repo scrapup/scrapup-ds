@@ -11,7 +11,7 @@ export type {
 } from './components/actions';
 export { Backdrop, Wordmark } from './components/brand';
 export type { BackdropProps, WordmarkProps, WordmarkSize, WordmarkTone } from './components/brand';
-export { Callout, CodeChip, Eyebrow, FlowLine, StatusPill, Tag } from './components/content';
+export { Callout, CodeChip, Eyebrow, FlowLine, Hero, SectionHeader, StatusPill, Tag } from './components/content';
 export type {
   CalloutProps,
   CalloutSize,
@@ -19,9 +19,26 @@ export type {
   EyebrowProps,
   EyebrowTone,
   FlowLineProps,
+  HeroProps,
+  SectionHeaderProps,
+  SectionHeaderSize,
   StatusPillProps,
   TagProps,
   TagTone,
 } from './components/content';
 export { Footer, TopBar } from './components/navigation';
 export type { FooterProps, NavLink, TopBarProps } from './components/navigation';
+export { FeatureCard, Panel, StatCard, StatementList, ValueStatement } from './components/surfaces';
+export type {
+  FeatureCardLabelTone,
+  FeatureCardProps,
+  PanelAccentEdge,
+  PanelElement,
+  PanelPadding,
+  PanelProps,
+  PanelVariant,
+  StatCardProps,
+  StatCardTone,
+  StatementListProps,
+  ValueStatementProps,
+} from './components/surfaces';
