@@ -1,0 +1,22 @@
+/*
+ * Tokens added by @scrapup/ds for values the design project components used inline (plan §3.2,
+ * RN-07). Names never collide with the ported design tokens, and colors derive from base tokens
+ * with color-mix (no literals here; test/tokens.test.ts).
+ * Accent-derived values resolve on :root, like the ported --glow-* tokens.
+ */
+:root {
+  /* Cyan washes and outlines (Button secondary, Backdrop frame labels) */
+  --su-cyan-wash: color-mix(in srgb, var(--su-cyan) 8%, transparent);
+  --su-cyan-outline: color-mix(in srgb, var(--su-cyan) 40%, transparent);
+  --su-cyan-label: color-mix(in srgb, var(--su-cyan) 62%, transparent);
+
+  /* Wordmark on paper: neon-light "up" glow */
+  --glow-text-mark-light: 0 0 16px color-mix(in srgb, var(--su-neon-light) 35%, transparent);
+
+  /* Active underline (LangSwitch, TopBar links) */
+  --glow-underline: 0 0 10px color-mix(in srgb, var(--accent) 70%, transparent);
+
+  /* Focus ring for interactive components */
+  --focus-ring: 2px solid var(--su-cyan);
+  --focus-ring-offset: 2px;
+}

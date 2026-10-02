@@ -1,0 +1,72 @@
+.su-backdrop {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  background: var(--surface-page);
+  color: var(--text-title);
+  font-family: var(--font-body);
+}
+
+.su-backdrop--full-height {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.su-backdrop__ambient,
+.su-backdrop__scanlines,
+.su-backdrop__frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.su-backdrop__ambient {
+  background: var(--bg-ambient);
+}
+
+.su-backdrop__scanlines {
+  background: var(--bg-scanlines);
+  opacity: 0.5;
+}
+
+.su-backdrop__mark {
+  position: absolute;
+  bottom: 20px;
+  width: 14px;
+  height: 14px;
+  border-bottom: 1.5px solid var(--su-cyan);
+  box-shadow: var(--glow-cyan-mark);
+}
+
+.su-backdrop__mark--left {
+  left: 20px;
+  border-left: 1.5px solid var(--su-cyan);
+}
+
+.su-backdrop__mark--right {
+  right: 20px;
+  border-right: 1.5px solid var(--su-cyan);
+}
+
+.su-backdrop__site,
+.su-backdrop__label {
+  position: absolute;
+  color: var(--su-cyan-label);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-micro);
+  letter-spacing: var(--tracking-label);
+}
+
+.su-backdrop__site {
+  top: 26px;
+  right: 42px;
+}
+
+.su-backdrop__label {
+  bottom: 26px;
+  left: 42px;
+}
+
+.su-backdrop__content {
+  position: relative;
+}
