@@ -1,14 +1,6 @@
 /* Catalog-only styles for the Foundations stories (not part of the package entry). */
 
-.su-foundations {
-  display: grid;
-  gap: var(--space-9);
-  padding: var(--space-9);
-  background: var(--surface-page);
-  color: var(--text-body);
-  font-family: var(--font-body);
-}
-
+/* Catalog-only accent switch. Public contract: consumers set --accent on :root (plan §3.2). */
 :root[data-su-accent='pink'] {
   --accent: var(--su-pink);
 }
@@ -19,6 +11,15 @@
 
 :root[data-su-accent='violet'] {
   --accent: var(--su-violet);
+}
+
+.su-foundations {
+  display: grid;
+  gap: var(--space-9);
+  padding: var(--space-9);
+  background: var(--surface-page);
+  color: var(--text-body);
+  font-family: var(--font-body);
 }
 
 .su-foundations__title {

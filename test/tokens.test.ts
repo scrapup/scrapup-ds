@@ -14,18 +14,21 @@ function withoutComments(css: string): string {
   return css.replace(/\/\*[\s\S]*?\*\//g, '');
 }
 
-/** Custom properties declared in the token sources (name → raw value). */
+/** Custom properties declared in the token sources (name → raw value); fails on duplicates. */
 function declaredTokens(): Map<string, string> {
   const tokens = new Map<string, string>();
-  for (const file of readdirSync(TOKENS_DIR).filter((name) => name.endsWith('.css'))) {
-    const css = withoutComments(readFileSync(join(TOKENS_DIR, file), 'utf8'));
-    for (const match of css.matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/g)) {
+  for (const file of TOKEN_FILES) {
+    for (const match of withoutComments(read(file)).matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/g)) {
       const [, name, value] = match;
-      if (name && value) tokens.set(name, value.trim());
+      if (!name || !value) continue;
+      if (tokens.has(name)) throw new Error(`Token ${name} is declared more than once`);
+      tokens.set(name, value.trim());
     }
   }
   return tokens;
 }
+
+const DECLARED = declaredTokens();
 
 describe('token layer', () => {
   it('ships every token source file', () => {
@@ -34,7 +37,17 @@ describe('token layer', () => {
   });
 
   it.each(Object.entries(fixture))('keeps %s with the design project value', (name, value) => {
-    expect(declaredTokens().get(name)).toBe(value);
+    expect(DECLARED.get(name)).toBe(value);
+  });
+
+  it('declares exactly the fixture tokens (additions go through the fixture)', () => {
+    expect([...DECLARED.keys()].sort()).toEqual(Object.keys(fixture).sort());
+  });
+
+  it('derives every color-mix token from the accent (RN-09)', () => {
+    const mixed = [...DECLARED].filter(([, value]) => value.includes('color-mix('));
+    expect(mixed.length).toBeGreaterThan(0);
+    for (const [name, value] of mixed) expect([name, value]).toEqual([name, expect.stringContaining('var(--accent)')]);
   });
 
   it('removes the prefers-reduced-motion override (OP-03)', () => {
@@ -55,9 +68,8 @@ describe('token layer', () => {
   });
 
   it('ends every font stack in a generic family', () => {
-    const tokens = declaredTokens();
     for (const name of ['--font-display', '--font-body', '--font-mono']) {
-      expect(tokens.get(name)).toMatch(/,(sans-serif|monospace)$/);
+      expect(DECLARED.get(name)).toMatch(/,(sans-serif|monospace)$/);
     }
   });
 });

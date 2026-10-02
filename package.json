@@ -1,7 +1,7 @@
 {
   "name": "@scrapup/ds",
   "version": "0.0.0",
-  "description": "scrapup design system — tokens, brand assets and React components.",
+  "description": "scrapup design system \u2014 tokens, brand assets and React components.",
   "private": true,
   "type": "module",
   "license": "MIT",
@@ -41,6 +41,7 @@
     "lint:css": "stylelint \"src/**/*.css\"",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:build": "REQUIRE_DIST=1 vitest run test/build-output.test.ts",
     "test:e2e": "playwright test",
     "test:e2e:update": "playwright test --update-snapshots",
     "size": "node scripts/size-check.mjs",

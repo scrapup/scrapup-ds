@@ -6,6 +6,9 @@ import { skipVisualOutsideContainer } from '../support/visual';
 const STORY = 'foundations-tokens--default';
 const NEON = 'rgb(255, 122, 51)';
 const PINK = 'rgb(255, 61, 154)';
+// Chromium serializes color-mix() results in the srgb color() notation (channels 0..1).
+const PINK_SRGB = 'color(srgb 1 0.239216 0.603922';
+const NEON_SRGB = 'color(srgb 1 0.478431 0.2';
 
 test.describe('Foundations/Tokens', () => {
   test('uses the neon accent by default', async ({ page }) => {
@@ -13,19 +16,32 @@ test.describe('Foundations/Tokens', () => {
     await expect(page.getByTestId('accent-swatch')).toHaveCSS('background-color', NEON);
   });
 
-  test('re-tints every accent-derived style when --accent is overridden (RN-09)', async ({ page }) => {
-    await gotoStory(page, STORY, { accent: 'pink' });
-    await expect(page.getByTestId('accent-swatch')).toHaveCSS('background-color', PINK);
-    const glow = page.getByTestId('glow-sample');
-    await expect(glow).toHaveCSS('color', PINK);
-    // Chromium serializes color-mix() results in the srgb color() notation (channels 0..1).
-    const shadow = await glow.evaluate((element) => getComputedStyle(element).boxShadow);
-    expect(shadow).toContain('color(srgb 1 0.239216 0.603922');
-    expect(shadow).not.toContain('color(srgb 1 0.478431 0.2');
-  });
+  // Expected button glow: --glow-button = color-mix(accent 42%), serialized by Chromium in srgb.
+  const ALTERNATES = [
+    { accent: 'pink', rgb: PINK, srgb: PINK_SRGB },
+    { accent: 'cyan', rgb: 'rgb(53, 230, 224)', srgb: 'color(srgb 0.207843 0.901961 0.878431' },
+    { accent: 'violet', rgb: 'rgb(179, 136, 255)', srgb: 'color(srgb 0.701961 0.533333 1' },
+  ] as const;
+  for (const { accent, rgb, srgb } of ALTERNATES) {
+    test(`re-tints the accent swatch, text and derived glow for the ${accent} accent (RN-09)`, async ({ page }) => {
+      await gotoStory(page, STORY, { accent });
+      await expect(page.getByTestId('accent-swatch')).toHaveCSS('background-color', rgb);
+      const glow = page.getByTestId('glow-sample');
+      await expect(glow).toHaveCSS('color', rgb);
+      const shadow = await glow.evaluate((element) => getComputedStyle(element).boxShadow);
+      expect(shadow).toContain(srgb);
+      expect(shadow).not.toContain(NEON_SRGB);
+    });
+  }
 
   test('falls back to the token font stacks when Google Fonts is blocked (RN-11)', async ({ page }) => {
-    await gotoStory(page, STORY);
+    await gotoStory(page, STORY); // gotoStory aborts every fonts.googleapis/gstatic request
+    // No webfont face may be loaded: the text renders with the fallback families.
+    const loadedFaces = await page.evaluate(async () => {
+      await document.fonts.ready;
+      return [...document.fonts].filter((face) => face.status === 'loaded').map((face) => face.family);
+    });
+    expect(loadedFaces).toEqual([]);
     const samples = {
       'type-display': /^"?Space Grotesk"?, "?Noto Sans JP"?, sans-serif$/,
       'type-body': /^"?IBM Plex Sans"?, "?Noto Sans JP"?, system-ui, sans-serif$/,
