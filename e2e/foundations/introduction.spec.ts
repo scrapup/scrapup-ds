@@ -5,7 +5,7 @@ import { gotoStory } from '../support/story';
 test.describe('Foundations/Introduction', () => {
   test('renders the story from the built catalog', async ({ page }) => {
     await gotoStory(page, 'foundations-introduction--default');
-    await expect(page.getByRole('heading', { level: 1, name: 'scrapup design system' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'probe heading that does not exist' })).toBeVisible();
   });
 
   for (const url of ['https://fonts.googleapis.com/css2?family=Inter', 'https://fonts.gstatic.com/s/inter.woff2']) {
