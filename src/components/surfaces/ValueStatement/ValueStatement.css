@@ -1,0 +1,32 @@
+.su-value-statement {
+  box-shadow: var(--shadow-panel-inset);
+}
+
+.su-value-statement__rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.su-value-statement__row {
+  margin: 0;
+  color: var(--su-fg-6);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.6vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: var(--tracking-display);
+}
+
+.su-value-statement__preferred {
+  color: var(--accent);
+  text-shadow: var(--glow-text-hero);
+}
+
+.su-value-statement__note {
+  max-width: 620px;
+  margin: 28px 0 0;
+  color: var(--text-muted);
+  font-size: var(--type-note);
+  line-height: var(--leading-body);
+}

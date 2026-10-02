@@ -1,0 +1,47 @@
+.su-stat-card > p {
+  margin: 0;
+}
+
+.su-stat-card__value {
+  font-family: var(--font-display);
+  font-size: var(--type-stat);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.su-stat-card--neon .su-stat-card__value {
+  color: var(--accent);
+  text-shadow: var(--glow-text-stat);
+}
+
+.su-stat-card--cyan .su-stat-card__value {
+  color: var(--su-cyan);
+  text-shadow: var(--glow-text-stat-cyan);
+}
+
+.su-stat-card__title {
+  color: var(--su-fg-2);
+  font-family: var(--font-display);
+  font-size: var(--type-stat-title);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.su-stat-card > .su-stat-card__body {
+  color: var(--text-body);
+  font-size: var(--type-body-sm);
+  line-height: 1.5;
+}
+
+.su-stat-card > .su-stat-card__body:not(:first-child) {
+  margin-top: 12px;
+}
+
+/* The design's --su-fg-faint (.4) is below WCAG AA; the minimum AA ink is used (plan §3.2). */
+.su-stat-card > .su-stat-card__source {
+  margin-top: var(--space-4);
+  color: var(--su-fg-hint);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-eyebrow);
+  letter-spacing: var(--tracking-meta);
+}

@@ -1,0 +1,45 @@
+.su-panel {
+  border: 1px solid var(--border-default);
+  background: var(--surface-panel);
+}
+
+.su-panel--pad-md {
+  padding: var(--space-7);
+}
+
+.su-panel--pad-lg {
+  padding: 28px;
+}
+
+.su-panel--pad-xl {
+  padding: 32px;
+}
+
+.su-panel--pad-xxl {
+  padding: var(--space-9);
+}
+
+.su-panel--strong {
+  border-color: var(--border-accent-faint);
+  background: var(--surface-panel-strong);
+  box-shadow: var(--shadow-panel-strong);
+}
+
+.su-panel--edge {
+  border-color: var(--accent);
+  background: var(--surface-accent-wash);
+  box-shadow: var(--shadow-edge-card);
+}
+
+.su-panel--dashed {
+  border: 1px dashed var(--su-line-strong);
+  background: transparent;
+}
+
+.su-panel--edge-neon {
+  border-left: 2px solid var(--accent);
+}
+
+.su-panel--edge-cyan {
+  border-left: 2px solid var(--su-cyan);
+}

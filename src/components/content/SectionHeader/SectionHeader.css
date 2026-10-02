@@ -1,0 +1,49 @@
+/* Doubled class: beats the Eyebrow's own margin reset. */
+.su-section-header .su-section-header__eyebrow {
+  margin-bottom: var(--space-5);
+}
+
+.su-section-header__title {
+  margin: 0 0 var(--space-4);
+  color: var(--text-heading);
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+.su-section-header--md .su-section-header__title {
+  max-width: 20ch;
+  font-size: var(--type-h2);
+  font-weight: 600;
+  line-height: var(--leading-h2);
+  letter-spacing: var(--tracking-h2);
+}
+
+.su-section-header--xl .su-section-header__title {
+  font-size: var(--type-section-xl);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-shadow: var(--glow-section-xl);
+}
+
+.su-section-header__highlight {
+  color: var(--accent);
+  text-shadow: var(--glow-text-hero);
+}
+
+.su-section-header__bar {
+  width: 68px;
+  height: 3px;
+  margin: 4px 0 var(--space-5);
+  background: var(--accent);
+  box-shadow: var(--glow-bar);
+}
+
+.su-section-header__body {
+  max-width: var(--measure-body);
+  margin: 0;
+  color: var(--text-body);
+  font-size: var(--type-body-lg);
+  line-height: var(--leading-body);
+  text-wrap: pretty;
+}

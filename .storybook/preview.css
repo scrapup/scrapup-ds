@@ -47,3 +47,7 @@ body {
 .sb-story-page {
   padding: var(--space-9) var(--container-pad-x);
 }
+
+.sb-story-copy--tight {
+  padding: 0;
+}
