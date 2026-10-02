@@ -1,0 +1,19 @@
+.su-eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
+
+.su-eyebrow--cyan {
+  color: var(--su-cyan);
+}
+
+.su-eyebrow--neon {
+  color: var(--accent);
+}
+
+.su-eyebrow--muted {
+  color: var(--su-fg-6);
+}

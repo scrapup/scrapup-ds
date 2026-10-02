@@ -1,0 +1,21 @@
+.su-code-chip {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  color: var(--su-fg-dim);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-nav);
+}
+
+.su-code-chip__hint {
+  color: var(--su-fg-hint);
+}
+
+.su-code-chip__code {
+  padding: 3px 8px;
+  border: 1px solid var(--su-cyan-edge-code);
+  background: var(--su-cyan-tint);
+  color: var(--su-cyan);
+  font-family: inherit;
+}

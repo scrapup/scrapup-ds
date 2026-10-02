@@ -1,7 +1,7 @@
 /*
  * Tokens added by @scrapup/ds for values the design project components used inline (plan §3.2,
- * RN-07). Names never collide with the ported design tokens, and colors derive from base tokens
- * with color-mix (no literals here; test/tokens.test.ts).
+ * RN-07). Names never collide with the ported design tokens. Colors derive from base tokens with
+ * color-mix; the only literals are design values with no base token (listed in test/tokens.test.ts).
  * Accent-derived values resolve on :root, like the ported --glow-* tokens.
  */
 :root {
@@ -9,6 +9,21 @@
   --su-cyan-wash: color-mix(in srgb, var(--su-cyan) 8%, transparent);
   --su-cyan-outline: color-mix(in srgb, var(--su-cyan) 40%, transparent);
   --su-cyan-label: color-mix(in srgb, var(--su-cyan) 62%, transparent);
+  --su-cyan-tint: color-mix(in srgb, var(--su-cyan) 10%, transparent);
+  --su-cyan-edge: color-mix(in srgb, var(--su-cyan) 22%, transparent);
+  --su-cyan-edge-quiet: color-mix(in srgb, var(--su-cyan) 20%, transparent);
+  --su-cyan-edge-code: color-mix(in srgb, var(--su-cyan) 18%, transparent);
+  --su-cyan-underline: color-mix(in srgb, var(--su-cyan) 35%, transparent);
+
+  /* Accent borders (StatusPill, Tag neon) */
+  --border-accent: color-mix(in srgb, var(--accent) 60%, transparent);
+  --border-accent-soft: color-mix(in srgb, var(--accent) 40%, transparent);
+
+  /* Text inks used by the design components with no base token. The design's .45 (CodeChip hint)
+     and .55 (FlowLine) are raised to .6, the minimum that meets WCAG AA 4.5:1 on ink (plan §3.2). */
+  --su-fg-footer: #9AA0B0;
+  --su-fg-hint: rgba(190,200,220,.6);
+  --su-fg-flow: rgba(190,200,220,.6);
 
   /* Wordmark on paper: neon-light "up" glow */
   --glow-text-mark-light: 0 0 16px color-mix(in srgb, var(--su-neon-light) 35%, transparent);

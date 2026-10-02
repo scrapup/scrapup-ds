@@ -1,0 +1,16 @@
+.su-flow-line {
+  margin: 0;
+  color: var(--su-fg-flow);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-nav);
+  letter-spacing: var(--tracking-button);
+}
+
+.su-flow-line__arrow {
+  color: var(--su-cyan);
+  white-space: pre;
+}
+
+.su-flow-line__step--last {
+  color: var(--accent);
+}

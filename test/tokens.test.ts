@@ -9,6 +9,8 @@ const TOKEN_FILES = ['fonts', 'colors', 'typography', 'spacing', 'effects', 'bas
 // … and tokens added by this package for values components used inline (plan §3.2).
 const EXTENSION_FILE = 'extensions';
 const ALL_TOKEN_FILES = [...TOKEN_FILES, EXTENSION_FILE];
+// Design component colors with no base token to derive from (kept as literals on purpose).
+const LITERAL_EXTENSIONS = new Set(['--su-fg-footer', '--su-fg-hint', '--su-fg-flow']);
 
 function read(name: string): string {
   return readFileSync(join(TOKENS_DIR, `${name}.css`), 'utf8');
@@ -55,7 +57,9 @@ describe('token layer', () => {
   });
 
   it('derives extension colors from base tokens (no color literals)', () => {
-    for (const [name, value] of EXTENDED) expect([name, value]).not.toEqual([name, expect.stringMatching(/#|rgba?\(|hsla?\(/)]);
+    const derived = [...EXTENDED].filter(([name]) => !LITERAL_EXTENSIONS.has(name));
+    for (const [name, value] of derived) expect([name, value]).not.toEqual([name, expect.stringMatching(/#|rgba?\(|hsla?\(/)]);
+    for (const name of LITERAL_EXTENSIONS) expect(EXTENDED.has(name)).toBe(true);
   });
 
   it('derives every ported color-mix token from the accent (RN-09)', () => {

@@ -39,3 +39,11 @@ body {
   color: var(--text-body);
   font-family: var(--font-body);
 }
+
+.sb-story-stack--wide {
+  align-items: stretch;
+}
+
+.sb-story-page {
+  padding: var(--space-9) var(--container-pad-x);
+}

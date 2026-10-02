@@ -1,0 +1,21 @@
+.su-status-pill {
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  padding: 5px 11px;
+  border: 1px solid var(--border-accent);
+  background: var(--surface-accent-tint);
+  box-shadow: var(--glow-pill);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-eyebrow);
+  letter-spacing: var(--tracking-label);
+}
+
+.su-status-pill__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-dot);
+  background: var(--accent);
+  box-shadow: var(--glow-dot);
+}

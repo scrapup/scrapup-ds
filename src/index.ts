@@ -11,3 +11,17 @@ export type {
 } from './components/actions';
 export { Backdrop, Wordmark } from './components/brand';
 export type { BackdropProps, WordmarkProps, WordmarkSize, WordmarkTone } from './components/brand';
+export { Callout, CodeChip, Eyebrow, FlowLine, StatusPill, Tag } from './components/content';
+export type {
+  CalloutProps,
+  CalloutSize,
+  CodeChipProps,
+  EyebrowProps,
+  EyebrowTone,
+  FlowLineProps,
+  StatusPillProps,
+  TagProps,
+  TagTone,
+} from './components/content';
+export { Footer, TopBar } from './components/navigation';
+export type { FooterProps, NavLink, TopBarProps } from './components/navigation';
