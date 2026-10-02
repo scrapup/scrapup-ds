@@ -5,7 +5,7 @@ export type StoryArgs = Record<string, string | number | boolean>;
 const FONT_HOSTS = /^https:\/\/fonts\.(googleapis|gstatic)\.com\//;
 
 /** Serializes args in Storybook's URL format: `key:value;key2:value2`. */
-export function encodeArgs(args: StoryArgs): string {
+function encodeArgs(args: StoryArgs): string {
   return Object.entries(args)
     .map(([key, value]) => `${key}:${encodeURIComponent(String(value))}`)
     .join(';');

@@ -8,18 +8,17 @@ test.describe('Foundations/Introduction', () => {
     await expect(page.getByRole('heading', { level: 1, name: 'scrapup design system' })).toBeVisible();
   });
 
-  test('aborts Google Fonts requests', async ({ page }) => {
-    await gotoStory(page, 'foundations-introduction--default');
-    const blocked = await page.evaluate(async () => {
-      try {
-        await fetch('https://fonts.googleapis.com/css2?family=Inter', { mode: 'no-cors' });
-        return false;
-      } catch {
-        return true;
-      }
+  for (const url of ['https://fonts.googleapis.com/css2?family=Inter', 'https://fonts.gstatic.com/s/inter.woff2']) {
+    test(`aborts the Google Fonts request ${new URL(url).host}`, async ({ page }) => {
+      await gotoStory(page, 'foundations-introduction--default');
+      const failed = page.waitForEvent('requestfailed', (request) => request.url() === url);
+      await page.evaluate(async (target) => {
+        await fetch(target, { mode: 'no-cors' }).catch(() => undefined);
+      }, url);
+      // net::ERR_FAILED is what route.abort() produces; an offline runner reports a DNS/connection error.
+      expect((await failed).failure()?.errorText).toBe('net::ERR_FAILED');
     });
-    expect(blocked).toBe(true);
-  });
+  }
 
   test('has no critical or serious a11y violations', async ({ page }) => {
     await gotoStory(page, 'foundations-introduction--default');

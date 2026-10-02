@@ -5,7 +5,7 @@ import { expectNoA11yViolations } from './a11y';
 describe('expectNoA11yViolations', () => {
   it('passes for accessible markup', async () => {
     const { container } = render(<button type="button">Join</button>);
-    await expectNoA11yViolations(container);
+    await expect(expectNoA11yViolations(container)).resolves.toBeUndefined();
   });
 
   it('fails for a serious violation (button without a name)', async () => {

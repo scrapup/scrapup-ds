@@ -8,3 +8,9 @@ test-results/
 *.log
 .vite/
 *.tsbuildinfo
+.msr/
+.msr/
+.env*
+!.env.example
+*.pem
+*.key

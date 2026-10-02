@@ -18,7 +18,7 @@ export default defineConfig({
     minify: true,
     sourcemap: false,
     rolldownOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      external: [/^react(-dom)?(\/.*)?$/],
       output: {
         assetFileNames: (asset) => (asset.names[0] === 'index.css' ? 'styles.css' : '[name][extname]'),
       },

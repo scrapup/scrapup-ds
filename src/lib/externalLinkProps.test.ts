@@ -1,31 +1,32 @@
 import { describe, expect, it } from 'vitest';
 import { externalLinkProps } from './externalLinkProps';
 
+const EXTERNAL = { target: '_blank', rel: 'noopener noreferrer' } as const;
+
 describe('externalLinkProps', () => {
-  it('opens http(s) links in a new tab without opener (D-06)', () => {
-    expect(externalLinkProps('https://scrapup.dev')).toEqual({
-      href: 'https://scrapup.dev',
-      target: '_blank',
-      rel: 'noopener noreferrer',
-    });
-    expect(externalLinkProps('HTTP://example.com')).toEqual({
-      href: 'HTTP://example.com',
-      target: '_blank',
-      rel: 'noopener noreferrer',
-    });
-  });
+  it.each(['https://scrapup.dev', 'HTTP://example.com', '//cdn.example.com/x', '  https://scrapup.dev'])(
+    'opens external link %j in a new tab without opener (D-06)',
+    (href) => {
+      expect(externalLinkProps(href)).toEqual({ href, ...EXTERNAL });
+    },
+  );
 
-  it('keeps internal, anchor and mailto links as plain hrefs', () => {
-    expect(externalLinkProps('/manifesto')).toEqual({ href: '/manifesto' });
-    expect(externalLinkProps('#waitlist')).toEqual({ href: '#waitlist' });
-    expect(externalLinkProps('mailto:hi@scrapup.dev')).toEqual({ href: 'mailto:hi@scrapup.dev' });
-  });
+  it.each(['/manifesto', './docs', '#waitlist', '?lang=pt', 'mailto:hi@scrapup.dev', 'tel:+5511999999999', ''])(
+    'keeps internal or safe link %j as a plain href',
+    (href) => {
+      expect(externalLinkProps(href)).toEqual({ href });
+    },
+  );
 
-  it('neutralizes script URLs, whatever the case or surrounding whitespace', () => {
-    expect(externalLinkProps('javascript:alert(1)')).toEqual({ href: '#' });
-    expect(externalLinkProps('  JavaScript:alert(1)')).toEqual({ href: '#' });
-    expect(externalLinkProps('java\tscript:alert(1)')).toEqual({ href: '#' });
-    expect(externalLinkProps('vbscript:msgbox(1)')).toEqual({ href: '#' });
-    expect(externalLinkProps('data:text/html,<b>x</b>')).toEqual({ href: '#' });
+  it.each([
+    'javascript:alert(1)',
+    '  JavaScript:alert(1)',
+    'java\tscript:alert(1)',
+    'vbscript:msgbox(1)',
+    'data:text/html,<b>x</b>',
+    'blob:https://x/1',
+    'ms-msdt:/id',
+  ])('neutralizes unsafe scheme %j to #', (href) => {
+    expect(externalLinkProps(href)).toEqual({ href: '#' });
   });
 });

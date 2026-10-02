@@ -1,3 +1,4 @@
+// Internal helpers shared by components — not part of the public API of @scrapup/ds.
 export { cx } from './cx';
 export type { ClassPart } from './cx';
 export { externalLinkProps } from './externalLinkProps';

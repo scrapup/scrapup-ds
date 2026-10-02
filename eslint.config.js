@@ -9,7 +9,7 @@ const NO_INLINE_STYLE = {
   selector: 'JSXAttribute[name.name="style"]',
   message: 'Inline styles are forbidden (RN-08): use a `su-` class and tokens.',
 };
-const NO_DANGER = {
+const NO_DANGEROUS_HTML = {
   selector: 'JSXAttribute[name.name="dangerouslySetInnerHTML"]',
   message: 'dangerouslySetInnerHTML is forbidden: render text as React children.',
 };
@@ -22,23 +22,33 @@ export default tseslint.config(
   ...tseslint.configs.strictTypeChecked,
   {
     languageOptions: {
-      globals: { ...globals.browser, ...globals.node },
+      globals: { ...globals.node },
       parserOptions: {
         projectService: { allowDefaultProject: ['*.js', 'scripts/*.mjs'] },
         tsconfigRootDir: import.meta.dirname,
       },
     },
     rules: {
-      'no-restricted-syntax': ['error', NO_INLINE_STYLE, NO_DANGER],
+      'no-restricted-syntax': ['error', NO_INLINE_STYLE, NO_DANGEROUS_HTML],
       'no-console': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
       '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
     },
   },
   {
+    // Library runtime is browser-only: Node globals are allowed in tooling, never in src/.
+    files: ['src/**'],
+    languageOptions: { globals: { ...globals.browser } },
+  },
+  {
     files: ['**/*.js', '**/*.mjs'],
     ...tseslint.configs.disableTypeChecked,
+  },
+  {
+    files: ['**/*.js', '**/*.mjs'],
+    rules: { '@typescript-eslint/explicit-function-return-type': 'off' },
   },
   {
     files: ['**/*.test.ts', '**/*.test.tsx', 'test/**', 'e2e/**'],

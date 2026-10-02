@@ -1,4 +1,4 @@
-/* @scrapup/ds — full stylesheet: fonts first, then tokens, base and components (TF-83-01). */
+/* @scrapup/ds — full stylesheet. Fonts, base and components land in TF-83-01 (fonts @import first). */
 @import url('./tokens.css');
 
 html {

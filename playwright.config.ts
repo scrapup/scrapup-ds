@@ -10,6 +10,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: CI,
   retries: CI ? 2 : 0,
+  failOnFlakyTests: CI,
   reporter: CI ? [['list'], ['html', { open: 'never' }]] : 'list',
   snapshotPathTemplate: 'e2e/__screenshots__/{testFileName}/{arg}{ext}',
   expect: {
