@@ -1,0 +1,63 @@
+@startuml seq-release
+title scrapup-ds — PR to release
+actor Maintainer
+actor Validator
+participant "GitHub PR" as PR
+participant "pr-title / validate" as PT
+participant "dependency-review" as DR
+participant "CodeQL" as CQ
+participant "ci / verify" as CI
+participant "ci / e2e" as E2E
+participant "main (protected)" as Main
+participant "release-please" as RP
+actor Consumer
+
+Maintainer -> PR : open PR (branch, title)
+par
+  PR -> PT : pull_request event
+  PT -> PT : check Conventional Commit title
+else
+  PR -> DR : pull_request event
+  DR -> DR : vulnerable deps >= moderate?
+else
+  PR -> CQ : code scanning (JS/TS + Actions)
+else
+  PR -> CI : pull_request event
+  CI -> CI : typecheck, lint, lint:css,\ntest:coverage (>=95%), build,\nsize (<=80KB), build-storybook
+else
+  PR -> E2E : pull_request event
+  E2E -> E2E : build-storybook, serve,\nplaywright test (interaction, styles,\naxe, visual)
+end
+alt title invalid
+  PT --> PR : validate = failure
+  PR --> Maintainer : merge blocked (RN-03)
+else vulnerable dependency or high/critical CodeQL alert
+  DR --> PR : dependency-review = failure / code_scanning blocks
+  PR --> Maintainer : merge blocked (no bypass)
+else any verify or e2e step fails
+  CI --> PR : verify / e2e = failure
+  PR --> Maintainer : merge blocked
+else branch behind main
+  PR --> Maintainer : merge blocked (strict) — update branch
+else all green
+  PT --> PR : validate = success
+  CI --> PR : verify = success
+  E2E --> PR : e2e = success
+  DR --> PR : dependency-review = success
+  CQ --> PR : no blocking alerts
+  alt PR authored by the admin (sole contributor)
+    Validator -> PR : merge with admin bypass of main-review\n(approval only; checks still enforced)
+  else PR by another contributor
+    Validator -> PR : approve (code owner), then squash merge
+  end
+  PR -> Main : commit "feat: ..."
+  Main -> RP : push event
+  RP -> PR : open/update Release PR\n(version + CHANGELOG.md)
+  Validator -> PR : approve + merge Release PR (bot-authored)
+  PR -> Main : chore(main): release X.Y.Z
+  Main -> RP : push event
+  RP -> Main : tag vX.Y.Z + GitHub Release\n(release-tags ruleset: Actions only)
+  Consumer -> Main : npm i github:scrapup/scrapup-ds#vX.Y.Z
+  Main --> Consumer : tarball; npm runs "prepare" (build)
+end
+@enduml

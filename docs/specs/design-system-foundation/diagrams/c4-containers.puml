@@ -1,0 +1,39 @@
+@startuml c4-containers
+!include <C4/C4_Container>
+title scrapup-ds — Containers
+
+Person(maint, "Maintainer", "Evolves tokens/components")
+Person(validator, "Validator", "Approves PRs, merges Release PR")
+Person(consumer, "Consumer", "Builds a scrapup surface")
+
+System_Boundary(gh, "GitHub — scrapup/scrapup-ds (public)") {
+  Container(repo, "Repository", "Git", "src/, assets/, docs/specs; rulesets: main-review, main-integrity, release-tags")
+  Container(dr, "dependency-review workflow", "GitHub Actions", "job 'dependency-review': blocks vulnerable deps (>= moderate)")
+  Container(codeql, "CodeQL default setup", "GitHub code scanning", "JS/TS + Actions; blocks high/critical alerts")
+  Container(dependabot, "Dependabot", "GitHub", "weekly version updates (actions, npm) + security updates")
+  Container(prtitle, "pr-title workflow", "GitHub Actions", "job 'validate': Conventional Commit PR title")
+  Container(ci, "ci workflow", "GitHub Actions / Node 24", "job 'verify': typecheck, lint, unit tests+coverage>=95%, build, size<=80KB, storybook build")
+  Container(e2e, "ci workflow — e2e job", "Playwright 1.63 on pinned container", "job 'e2e': per-component specs against built Storybook; axe; visual baselines")
+  Container(rp, "release-please workflow", "GitHub Actions", "Release PR, tag vX.Y.Z, GitHub Release, CHANGELOG")
+}
+
+Container(sb, "Storybook catalog", "Storybook 10 (local)", "One story per component; a11y addon")
+System_Ext(fonts, "Google Fonts", "Space Grotesk, IBM Plex Sans/Mono, Noto Sans JP")
+System_Ext(site, "scrapup.dev (scrapup-site)", "Future consumer, server-rendered")
+
+Rel(maint, repo, "Opens PR", "git/https")
+Rel(repo, prtitle, "Triggers on PR")
+Rel(repo, dr, "Triggers on PR")
+Rel(repo, codeql, "Analyzes PR / main")
+Rel(dependabot, repo, "Opens update PRs")
+Rel(repo, ci, "Triggers on PR / push main")
+Rel(repo, e2e, "Triggers on PR / push main")
+Rel(e2e, sb, "Drives stories (storybook-static)", "http")
+Rel(validator, repo, "Squash-merges PR / Release PR")
+Rel(repo, rp, "Triggers on push main")
+Rel(rp, repo, "Opens Release PR, creates tag")
+Rel(maint, sb, "npm run storybook")
+Rel(consumer, repo, "npm i github:scrapup/scrapup-ds#vX.Y.Z", "git")
+Rel(site, fonts, "Loads fonts via styles.css @import", "https")
+Rel(consumer, site, "Composes pages with @scrapup/ds")
+@enduml

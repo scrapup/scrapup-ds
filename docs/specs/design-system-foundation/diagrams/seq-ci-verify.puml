@@ -1,0 +1,35 @@
+@startuml seq-ci-verify
+title US-82 — Quality gates and rulesets step 2
+actor Maintainer
+participant "GitHub PR" as PR
+participant "ci / verify (Node 24)" as CI
+participant "ci / e2e (Playwright container)" as E2E
+participant "CodeQL" as CQ
+participant "GitHub API" as API
+
+Maintainer -> PR : open PR "ci: add verify and e2e quality gates"
+par
+  PR -> CI : pull_request
+  CI -> CI : npm ci → typecheck → lint → lint:css
+  CI -> CI : test:coverage (unit, thresholds 95%)
+  CI -> CI : build → size (≤ 81 920 bytes) → build-storybook
+else
+  PR -> E2E : pull_request
+  E2E -> E2E : npm ci → build-storybook → serve :6007
+  E2E -> E2E : playwright test (interaction, computed styles, axe, visual)
+end
+alt any step exits non-zero
+  CI --> PR : verify = failure
+  E2E --> PR : e2e = failure (report artifact)
+  PR --> Maintainer : merge blocked
+else all checks green
+  CI --> PR : verify = success
+  E2E --> PR : e2e = success
+  Maintainer -> PR : merge (admin bypass of main-review only)
+  Maintainer -> API : PATCH code-scanning/default-setup\n(javascript-typescript, actions)
+  API -> CQ : first analysis on main
+  CQ --> API : analysis complete
+  Maintainer -> API : PUT rulesets/main-integrity\n(validate, dependency-review, verify, e2e + code_scanning)
+  API --> Maintainer : 200
+end
+@enduml

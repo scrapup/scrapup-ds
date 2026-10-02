@@ -1,0 +1,36 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: ci(deps)
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: chore(deps)
+      prefix-development: chore(deps)
+    ignore:
+      # D-01: typescript-eslint supports TypeScript < 6.1 only.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+    groups:
+      storybook:
+        patterns: ["storybook", "@storybook/*"]
+      vitest:
+        patterns: ["vitest", "@vitest/*"]
+      playwright:
+        # Bump the e2e container tag in ci.yml in the same PR.
+        patterns: ["@playwright/test", "@axe-core/playwright"]
+      eslint:
+        patterns: ["eslint", "eslint-*", "@eslint/*", "typescript-eslint"]
+      stylelint:
+        patterns: ["stylelint", "stylelint-*"]

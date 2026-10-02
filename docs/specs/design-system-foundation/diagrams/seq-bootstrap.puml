@@ -1,0 +1,42 @@
+@startuml seq-bootstrap
+title US-81 — Create, configure, bootstrap and protect
+actor Maintainer
+participant "gh CLI" as GH
+participant "GitHub API" as API
+participant "scrapup/scrapup-ds" as Repo
+
+== TF-81-01 Create and configure ==
+Maintainer -> GH : gh repo create scrapup/scrapup-ds --public
+GH -> API : POST /orgs/scrapup/repos
+API --> GH : 201 created (empty)
+Maintainer -> API : PATCH general + merge (mirror scrapup/scrapup)
+Maintainer -> API : PUT workflow permissions (read, can create PRs)
+Maintainer -> API : PUT actions allowlist (GitHub-owned + 2 patterns)
+Maintainer -> API : PUT vulnerability-alerts, automated-security-fixes,\nprivate-vulnerability-reporting
+Maintainer -> API : PATCH security_and_analysis\n(secret scanning + push protection)
+API --> Maintainer : settings verified
+== TF-81-02 Bootstrap commit ==
+Maintainer -> Repo : git push main (governance, SECURITY.md, dependabot.yml,\nSHA-pinned workflows, specs)
+alt contains a detectable secret
+  Repo --> Maintainer : rejected by push protection
+else clean
+  Repo --> Maintainer : main created; release-please: no Release PR
+end
+== TF-81-03 Rulesets (step 1) ==
+Maintainer -> API : POST rulesets main-review\n(1 code-owner approval; admin bypass at PR merge)
+Maintainer -> API : POST rulesets main-integrity\n(validate + dependency-review; linear; no bypass)
+Maintainer -> API : POST rulesets release-tags (v*: Actions only)
+alt direct push to main
+  Maintainer -> Repo : git push main
+  Repo --> Maintainer : rejected
+else manual tag v*
+  Maintainer -> Repo : git push tag v0.0.0-probe
+  Repo --> Maintainer : rejected
+else PR with invalid title
+  Maintainer -> Repo : open PR "update stuff"
+  Repo --> Maintainer : validate = failure, merge blocked
+else admin PR, checks green
+  Maintainer -> Repo : open PR "chore: probe repository gates"
+  Repo --> Maintainer : review required; only admin bypass offered
+end
+@enduml

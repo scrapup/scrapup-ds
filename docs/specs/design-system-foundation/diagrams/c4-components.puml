@@ -1,0 +1,35 @@
+@startuml c4-components
+!include <C4/C4_Component>
+title @scrapup/ds — Components
+
+Container_Boundary(pkg, "@scrapup/ds (dist/)") {
+  Component(tokens, "tokens.css", "CSS custom properties", "colors, typography, spacing, effects, keyframes")
+  Component(styles, "styles.css", "CSS bundle", "fonts @import + tokens + base reset + all component classes")
+  Component(lib, "lib/", "TS utilities", "cx(), resolveOption(), splitHighlight(), externalLinkProps()")
+  Component(brand, "brand", "React", "Wordmark, Backdrop")
+  Component(actions, "actions", "React", "Button, LangSwitch")
+  Component(nav, "navigation", "React", "TopBar, Footer")
+  Component(content, "content", "React", "Hero, SectionHeader, Eyebrow, StatusPill, Callout, Tag, CodeChip, FlowLine")
+  Component(surfaces, "surfaces", "React", "Panel, StatCard, FeatureCard, StatementList, ValueStatement")
+  Component(process, "process", "React", "MilestoneAxis, PhaseSteps")
+  Component(forms, "forms", "React (stateful)", "WaitlistForm — presentational")
+  Component(feedback, "feedback", "React", "GlitchCode")
+  Component(index, "index.js + .d.ts", "ESM entry", "Named exports + prop types")
+  Component(assets, "assets/logos", "PNG/GIF", "wordmark, avatar, favicon, social")
+}
+
+Rel(styles, tokens, "includes")
+Rel(brand, lib, "uses")
+Rel(actions, lib, "uses")
+Rel(content, lib, "uses")
+Rel(surfaces, lib, "uses")
+Rel(process, lib, "uses")
+Rel(forms, lib, "uses")
+Rel(feedback, lib, "uses")
+Rel(nav, brand, "Wordmark")
+Rel(nav, actions, "LangSwitch")
+Rel(content, actions, "Hero renders actions slot")
+Rel(process, surfaces, "MilestoneAxis inside strong Panel")
+Rel(index, brand, "re-exports")
+Rel(index, forms, "re-exports")
+@enduml

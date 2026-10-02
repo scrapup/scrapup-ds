@@ -1,0 +1,27 @@
+@startuml seq-waitlist
+title US-84 — WaitlistForm (presentational) submit flow
+actor Visitor
+participant "WaitlistForm" as WF
+participant "Consumer onSubmit" as H
+
+Visitor -> WF : type e-mail, submit
+WF -> WF : trim + validate pattern
+alt invalid or empty
+  WF --> Visitor : invalidMessage (role=alert); onSubmit NOT called
+else valid
+  WF -> WF : status = submitting (button disabled, aria-busy)
+  opt second submit while submitting
+    Visitor -> WF : submit again
+    WF --> Visitor : ignored
+  end
+  WF -> H : onSubmit(email)
+  alt resolves / returns
+    H --> WF : ok
+    WF --> Visitor : success panel (✓ successTitle, successBody)
+  else rejects / throws
+    H --> WF : error
+    WF --> Visitor : errorMessage (role=alert); value preserved; resubmit enabled
+  end
+end
+note over WF : No network, storage or logging inside the component (RN-13)
+@enduml

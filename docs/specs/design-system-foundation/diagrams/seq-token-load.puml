@@ -1,0 +1,27 @@
+@startuml seq-token-load
+title US-83 — Consumer loads tokens, fonts and assets
+actor Consumer
+participant "Consumer app" as App
+participant "@scrapup/ds dist/styles.css" as CSS
+participant "Google Fonts" as GF
+
+Consumer -> App : import '@scrapup/ds/styles.css'
+App -> CSS : load stylesheet
+CSS -> GF : @import (first rule), display=swap
+alt fonts reachable
+  GF --> CSS : Space Grotesk, IBM Plex Sans/Mono, Noto Sans JP
+  CSS --> App : brand typography
+else fonts blocked / offline
+  GF --> CSS : network error
+  CSS --> App : fallback stacks (sans-serif, system-ui, monospace)
+end
+CSS --> App : tokens (:root) + base reset
+opt accent override
+  Consumer -> App : :root { --accent: #FF3D9A }
+  App -> CSS : color-mix(var(--accent)) recomputed
+  CSS --> App : all glows / primary / edges re-tinted
+end
+opt brand asset
+  Consumer -> App : import logo from '@scrapup/ds/assets/logos/scrapup-wordmark-dark.png'
+end
+@enduml

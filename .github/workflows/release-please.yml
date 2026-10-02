@@ -1,0 +1,23 @@
+name: release-please
+
+# On push to main: open/maintain the Release PR. Merging it creates the `vX.Y.Z`
+# tag and GitHub release (the only way tags are created, RN-20). No publish or
+# deploy steps: consumers install from Git tags (RN-05).
+
+on:
+  push:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4.4.1
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
