@@ -24,6 +24,17 @@ export default {
         'color-no-hex': null,
         'color-named': null,
         'function-disallowed-list': null,
+        // Token sources stay byte-comparable with the design project (parity fixture), so
+        // notation-only rules do not apply; the brand keyframes keep their camelCase names.
+        'alpha-value-notation': null,
+        'at-rule-empty-line-before': null,
+        'color-function-alias-notation': null,
+        'color-function-notation': null,
+        'comment-empty-line-before': null,
+        'custom-property-empty-line-before': null,
+        'declaration-block-single-line-max-declarations': null,
+        'keyframes-name-pattern': null,
+        'value-keyword-case': null,
       },
     },
   ],

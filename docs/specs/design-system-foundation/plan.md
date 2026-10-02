@@ -254,6 +254,7 @@ deviations:
 | New tokens for every literal that components used inline: e.g. `--su-cyan-wash: rgba(53,230,224,.08)`, `--su-cyan-outline: rgba(53,230,224,.4)`, `--su-placeholder: rgba(184,190,204,.34)`, `--glow-button-form`, `--shadow-success` | RN-07: components reference tokens only; literals live only in `src/tokens/` |
 | **Remove** `@media (prefers-reduced-motion: reduce) { --flicker-duration: 0s }` | OP-03: animations stay on; opt-out is a component prop (RN-18) |
 | Keyframes `scrapupFlicker`, `scrapupGlitchC/M/Slice` kept in `effects.css` | Brand motion |
+| Accent override applies on `:root` (verified in e2e, TF-83-01): `--glow-*`/`--shadow-*` are declared on `:root` and resolve `var(--accent)` there, so a subtree override re-tints `--accent` itself but not the derived tokens | Documented in README; consumers theme with `:root { --accent: … }` |
 
 Token parity is guarded by `test/fixtures/design-tokens.json` (name → value, exported from the
 design project at import time) and `test/tokens.test.ts` (parses `src/tokens/*.css`, asserts every
@@ -510,8 +511,8 @@ All `uses:` are pinned to a **full commit SHA** with the version in a trailing c
 |---|---|---|---|
 | `pr-title.yml` | `pull_request` opened/edited/synchronize/reopened | `validate` | `amannn/action-semantic-pull-request` (v5, SHA-pinned), types per RN-03; `permissions: pull-requests: read` |
 | `dependency-review.yml` | `pull_request` | `dependency-review` | `actions/dependency-review-action` (v4, SHA-pinned), `fail-on-severity: moderate`, `comment-summary-in-pr: on-failure`; `permissions: contents: read, pull-requests: write` |
-| `ci.yml` | `pull_request`, `push: main` | `verify` | Node 24, `npm ci` → `typecheck` → `lint` → `lint:css` → `test:coverage` → `build` → `size` → `build-storybook`; size + coverage summary to `$GITHUB_STEP_SUMMARY`; `permissions: contents: read` |
-| `ci.yml` | `pull_request`, `push: main` | `e2e` | Container `mcr.microsoft.com/playwright:v1.63.0-noble` (`HOME=/root`), Node 24, `npm ci` → `build-storybook` → `test:e2e`; uploads `playwright-report/` + `test-results/` (7 days); `permissions: contents: read` |
+| `ci.yml` | `pull_request`, `push: main` | `verify` | Node from `.nvmrc`, `npm ci` → `typecheck` → `lint` → `lint:css` → `test:coverage` → `build` → build-output contract (`REQUIRE_DIST=1`) → `size` → `build-storybook`; size + coverage summary to `$GITHUB_STEP_SUMMARY`; `permissions: contents: read` |
+| `ci.yml` | `pull_request`, `push: main` | `e2e` | Container `mcr.microsoft.com/playwright:v1.63.0-noble` pinned by digest (`HOME=/root`), Node from `.nvmrc`, `npm ci` → image/`@playwright/test` version parity → `build-storybook` → `test:e2e`; uploads `playwright-report/` + `test-results/` (7 days); `permissions: contents: read`. Visual assertions run only on the container (`CI` or `RUN_VISUAL=1`) |
 | `release-please.yml` | `push: main` | `release-please` | `googleapis/release-please-action` (v4, SHA-pinned) with config/manifest files; `permissions: contents: write, pull-requests: write`; no deploy/publish steps (RN-05, RN-14) |
 | `.github/dependabot.yml` | weekly (Monday) | — | Version updates for `github-actions` (`/`) and `npm` (`/`, grouped: `storybook*`, `@vitest/*`+`vitest`, `@playwright/test`+container tag noted in PR, `eslint*`/`typescript-eslint`, `stylelint*`); `commit-message.prefix: chore(deps)` / `build(deps)` for runtime-relevant; `open-pull-requests-limit: 5`; TypeScript major updates ignored (D-01) |
 | `SECURITY.md` | — | — | Supported versions (latest minor), private vulnerability reporting link, no public issues for vulnerabilities, expected response time `[best effort]` |

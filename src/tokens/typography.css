@@ -1,0 +1,43 @@
+/* Ported 1:1 from the scrapup design project (tokens/typography.css). Values change only via the parity fixture. */
+:root {
+  --font-display: 'Space Grotesk','Noto Sans JP',sans-serif;
+  --font-body: 'IBM Plex Sans','Noto Sans JP',system-ui,sans-serif;
+  --font-mono: 'IBM Plex Mono','Noto Sans JP',monospace;
+
+  /* Display scale (Space Grotesk) */
+  --type-hero: clamp(2.7rem,5.6vw,5.1rem);      /* 600, lh 1.02, ls -.025em */
+  --type-hero-xl: clamp(2.7rem,6vw,5.4rem);     /* manifesto h1, lh 1.04 */
+  --type-section-xl: clamp(2.4rem,5vw,4rem);    /* 700, lh 1.0, ls -.03em */
+  --type-h2: clamp(1.7rem,3.2vw,2.6rem);        /* 600, lh 1.08, ls -.02em */
+  --type-h2-cta: clamp(2rem,3.6vw,3rem);
+  --type-statement: clamp(1.25rem,2.2vw,1.75rem);
+  --type-stat: 2.7rem;                          /* 700, lh 1 */
+  --type-card-title: 1.05rem;                   /* 600 */
+  --type-role-title: 1.35rem;
+
+  /* Body scale (IBM Plex Sans) */
+  --type-lead: clamp(1.05rem,1.5vw,1.24rem);    /* lh 1.55 */
+  --type-body-lg: 1.05rem;                      /* lh 1.6 */
+  --type-body: 14px;
+  --type-body-sm: 13.5px;                       /* lh 1.5 */
+  --type-body-xs: 13px;
+  --type-caption: 12.5px;
+
+  /* Mono scale (IBM Plex Mono — labels, UI, buttons) */
+  --type-mono-button: 13px;   /* 600, ls .06em */
+  --type-mono-nav: 12px;      /* ls .1em */
+  --type-mono-eyebrow: 11px;  /* ls .2em */
+  --type-mono-micro: 10px;    /* ls .16em, frame marks */
+
+  --tracking-display: -.025em;
+  --tracking-h2: -.02em;
+  --tracking-eyebrow: .2em;
+  --tracking-label: .16em;
+  --tracking-nav: .1em;
+  --tracking-button: .06em;
+
+  --leading-display: 1.02;
+  --leading-h2: 1.08;
+  --leading-body: 1.6;
+  --leading-ja: 1.7;          /* Japanese body; 1.85 for manifesto prose */
+}
