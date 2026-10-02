@@ -1,0 +1,5 @@
+/* Catalog canvas only (not shipped): the brand surfaces are designed on dark ink. */
+body {
+  margin: 0;
+  background: var(--surface-page);
+}

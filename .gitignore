@@ -6,3 +6,11 @@ playwright-report/
 test-results/
 .DS_Store
 *.log
+.vite/
+*.tsbuildinfo
+.msr/
+.msr/
+.env*
+!.env.example
+*.pem
+*.key

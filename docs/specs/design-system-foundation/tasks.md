@@ -514,7 +514,7 @@ enforcement), D-01 (TypeScript 6.0.3), D-05..D-07.
   8.3.2; `@vitejs/plugin-react` 6.1.1; `vitest` + `@vitest/coverage-v8` 5.0.3; `jsdom` 30.1.1;
   `@testing-library/react` 16.3.3; `@testing-library/user-event` 14.6.7; `axe-core` 4.13.0;
   `storybook`, `@storybook/react-vite`, `@storybook/addon-a11y` 10.6.1; `eslint` 10.11.0;
-  `typescript-eslint` 8.71.0; `eslint-plugin-react` 7.37.5; `@eslint/js`; `stylelint` 17.16.0;
+  `typescript-eslint` 8.71.0; `@eslint/js`; `stylelint` 17.16.0;
   `stylelint-config-standard` 40.0.0; `@playwright/test` 1.63.0; `@axe-core/playwright` 4.13.0;
   `http-server` 14.1.1); `package-lock.json` committed
 - `tsconfig.json` (strict, `jsx: react-jsx`, `moduleResolution: bundler`), `tsconfig.build.json`
@@ -523,8 +523,8 @@ enforcement), D-01 (TypeScript 6.0.3), D-05..D-07.
   `react-dom`, `react/jsx-runtime`; `cssCodeSplit: false`; CSS output `styles.css`; minify on
 - `vitest.config.ts` — jsdom, `test/setup.ts`, coverage v8 over `src/components/**`, `src/lib/**`
   (exclude `*.stories.tsx`, `index.ts`), thresholds 95 for lines/branches/functions/statements
-- `eslint.config.js` — rules of plan §5.3 (`react/forbid-dom-props` + `react/forbid-component-props`
-  with `style`, `react/no-danger`, `@typescript-eslint/no-explicit-any`, `no-console`)
+- `eslint.config.js` — rules of plan §5.3 (`no-restricted-syntax` for JSX `style` and
+  `dangerouslySetInnerHTML`, `@typescript-eslint/no-explicit-any`, `no-console`)
 - `stylelint.config.js` — plan §5.3; override for `src/tokens/**` (literals allowed there only)
 - `scripts/size-check.mjs` — sums `dist/**/*.{js,css}`; prints table; exits 1 above 81 920 bytes;
   appends to `$GITHUB_STEP_SUMMARY` when set
