@@ -1,0 +1,6 @@
+/* @scrapup/ds — full stylesheet: fonts first, then tokens, base and components (TF-83-01). */
+@import url('./tokens.css');
+
+html {
+  text-size-adjust: 100%;
+}

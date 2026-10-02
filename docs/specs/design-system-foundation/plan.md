@@ -29,7 +29,7 @@
 | Catalog | Storybook (`@storybook/react-vite`) + `@storybook/addon-a11y` | 10.6.1 |
 | Unit tests | Vitest + `@vitest/coverage-v8` + jsdom + Testing Library + `axe-core` | 5.0.3 / 30.1.1 / 16.3.3 / 4.13.0 |
 | E2E tests | `@playwright/test` (Chromium) + `@axe-core/playwright`, against the built Storybook served by `http-server`; CI on `mcr.microsoft.com/playwright:v1.63.0-noble` | 1.63.0 / 4.13.0 / 14.1.1 |
-| Lint | ESLint 10 + `typescript-eslint` + `eslint-plugin-react`; Stylelint 17 + `stylelint-config-standard` | 10.11.0 / 8.71.0 / 7.37.5 / 17.16.0 / 40.0.0 |
+| Lint | ESLint 10 + `typescript-eslint` (React rules as `no-restricted-syntax` selectors — `eslint-plugin-react` 7.37.5 peers ESLint ≤ 9); Stylelint 17 + `stylelint-config-standard` | 10.11.0 / 8.71.0 / 17.16.0 / 40.0.0 |
 | Runtime / CI | Node 24, GitHub Actions | — |
 | Release | `googleapis/release-please-action@v4` (`release-type: node`) | v4 |
 
@@ -548,7 +548,7 @@ starts at `0.0.0`; the first `feat` yields `v0.1.0`.
 ### 5.2 Security
 
 - No `dangerouslySetInnerHTML`; all text rendered as React children (ESLint
-  `react/no-danger: error`).
+  `no-restricted-syntax` on `JSXAttribute[name.name="dangerouslySetInnerHTML"]`).
 - External links: `rel="noopener noreferrer"` (D-06).
 - WaitlistForm performs no I/O; data handling is the consumer's responsibility (RN-13).
 - Supply chain (RN-21): committed `package-lock.json`, `npm ci` in CI, actions pinned to full
@@ -569,7 +569,7 @@ starts at `0.0.0`; the first `feat` yields `v0.1.0`.
 
 | Rule | Mechanism |
 |---|---|
-| RN-08 no inline styles | ESLint `react/forbid-dom-props` and `react/forbid-component-props` with `style` |
+| RN-08 no inline styles | ESLint `no-restricted-syntax` on `JSXAttribute[name.name="style"]` (DOM and component props) |
 | RN-07 tokens only | Stylelint outside `src/tokens/**`: `color-no-hex`, `color-named: never`, `function-disallowed-list: [rgb, rgba, hsl, hsla]` |
 | RN-10 square corners | Stylelint `declaration-property-value-allowed-list` — `border-radius` only `0` or `var(--radius-*)` |
 | No `any` | `@typescript-eslint/no-explicit-any: error` |
