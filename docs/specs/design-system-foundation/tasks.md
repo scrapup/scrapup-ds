@@ -94,7 +94,7 @@ approval is required, and the owner (admin) can skip only that approval, only wh
 - [ ] Security: vulnerability alerts, Dependabot security updates, secret scanning, push protection
       and private vulnerability reporting enabled; `SECURITY.md` and `dependabot.yml` on `main`
 - [ ] Rulesets `main-review`, `main-integrity` and `release-tags` active as plan §4.3.2 (step 1)
-- [ ] Direct push to `main` is rejected; manual `v*` tag creation is rejected
+- [ ] Direct push to `main` is rejected; `v*` tags cannot be moved or deleted
 - [ ] A PR with a non-conventional title shows `validate` failing and cannot be merged
 - [ ] A PR by the admin shows "review required" and is mergeable only through the admin bypass
 
@@ -334,7 +334,8 @@ gh repo view scrapup/scrapup-ds --json visibility,licenseInfo,defaultBranchRef \
 | `scrapforge:verification-before-completion` | Evidence of repo state |
 
 **4.6 Exit criteria:**
-- [ ] 4.3 passes; release-please run green without Release PR
+- [ ] 4.3 passes; no Release PR (the release-please run fails with "Missing required file:
+      package.json" until TF-82-01 adds `package.json` — expected)
 - [ ] GitHub detects `SECURITY.md` (community profile) and MIT license
 - [ ] Dependabot shows the configured ecosystems (Insights → Dependency graph → Dependabot)
 
@@ -343,7 +344,7 @@ gh repo view scrapup/scrapup-ds --json visibility,licenseInfo,defaultBranchRef \
 - [ ] `main` holds exactly the files in 2.1
 - [ ] All actions SHA-pinned; every workflow declares `permissions`
 - [ ] Commit message Conventional, no AI trailer
-- [ ] release-please workflow green, no Release PR
+- [ ] release-please workflow ran, no Release PR
 
 ---
 
@@ -370,7 +371,7 @@ TF-82-02, when they exist). Rulesets replace classic branch protection.
 
 **2.3 Contract:** `POST repos/scrapup/scrapup-ds/rulesets` with the three bodies of plan §4.3.2
 (`main-review` with admin `pull_request` bypass; `main-integrity` step 1 with `validate` +
-`dependency-review`, no bypass; `release-tags` with GitHub Actions bypass). Bodies kept as scratch
+`dependency-review`, no bypass; `release-tags` with `update` + `deletion`, no bypass). Bodies kept as scratch
 files (not committed).
 
 **2.4 Resilience and Zero Trust**
@@ -395,7 +396,8 @@ files (not committed).
    waiting for requirements to be met (bypass rules)"). Close the probe PR without merging; delete
    branch. The bypass merge itself is first exercised by TF-82-01.
 4. Probe C (push): `git push origin HEAD:main` (empty commit) → rejected.
-5. Probe D (tag): `git tag v0.0.0-probe && git push origin v0.0.0-probe` → rejected; delete local tag.
+5. Probe D (tag): not executed — creation is allowed, so a probe tag would become undeletable;
+   evidence is the ruleset body (`update`, `deletion`, no bypass).
 
 **4.3 Validation command:**
 
@@ -428,7 +430,7 @@ done
 - [ ] Invalid PR title → `validate` failure, merge blocked
 - [ ] Admin's own PR → review required; only the bypass path offered
 - [ ] Direct push to `main` rejected
-- [ ] Manual `v*` tag push rejected
+- [ ] `release-tags` active with `update` + `deletion`, no bypass actors
 
 ---
 
@@ -1446,7 +1448,7 @@ component per group.
 | `prepare` build fails on consumer install | Treat as `fix:` PR; release `0.1.1` | Consumers stay on no tag |
 | Release-please lacks permission | Check workflow permissions (TF-81-01) | No Release PR |
 | Release PR checks did not run | Close/reopen the Release PR to trigger \`pull_request\`; never bypass checks | Release delayed |
-| \`release-tags\` ruleset blocks the tag | Verify the GitHub Actions bypass actor (TF-81-03); never tag by hand | Release delayed |
+| \`release-tags\` ruleset blocks the tag | Ruleset must not contain `creation` (TF-81-03); never tag by hand | Release delayed |
 
 ##### 4. Execution Guidance
 
@@ -1475,6 +1477,6 @@ gh release view v0.1.0 -R scrapup/scrapup-ds && git ls-remote --tags origin v0.1
 
 ##### 5. Acceptance Tests (Definition of Done)
 
-- [ ] `v0.1.0` tag and GitHub Release created by release-please (allowed by `release-tags` bypass)
+- [ ] `v0.1.0` tag and GitHub Release created by release-please (creation is not restricted by `release-tags`)
 - [ ] `CHANGELOG.md` on `main`
 - [ ] Clean consumer install from tag builds and renders components

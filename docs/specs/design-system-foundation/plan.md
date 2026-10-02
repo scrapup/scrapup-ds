@@ -199,7 +199,7 @@ else all green
   Validator -> PR : approve + merge Release PR (bot-authored)
   PR -> Main : chore(main): release X.Y.Z
   Main -> RP : push event
-  RP -> Main : tag vX.Y.Z + GitHub Release\n(release-tags ruleset: Actions only)
+  RP -> Main : tag vX.Y.Z + GitHub Release\n(release-tags ruleset: immutable v* tags)
   Consumer -> Main : npm i github:scrapup/scrapup-ds#vX.Y.Z
   Main --> Consumer : tarball; npm runs "prepare" (build)
 end
@@ -441,7 +441,7 @@ restrictive combination applies):
 |---|---|---|---|
 | `main-review` | `~DEFAULT_BRANCH` | `pull_request`: 1 approval, code-owner review, dismiss stale approvals on push, conversation resolution, merge method `squash` | **Repository admin, `pull_request` mode** (bypass only when merging a PR; never on direct push) |
 | `main-integrity` | `~DEFAULT_BRANCH` | `pull_request` (0 approvals — forbids direct push), `required_status_checks` (strict), `required_linear_history`, `non_fast_forward`, `deletion`; step 2 adds `code_scanning` | **None** — checks apply to everyone, admin included |
-| `release-tags` | `refs/tags/v*` | `creation`, `update`, `deletion` | GitHub Actions app (`Integration` 15368, `always`) — only release-please creates tags |
+| `release-tags` | `refs/tags/v*` | `update`, `deletion` | **None** — tags are immutable; creation is left open because GitHub rejects the Actions app (15368) as a repository ruleset bypass actor, so release-please (`GITHUB_TOKEN`) could not create tags otherwise. Manual tag creation is forbidden by process (RN-20) |
 
 Release PRs are authored by `github-actions[bot]`, so the admin approves them normally (no bypass).
 Evidence 2026-10-01: Release PRs in `scrapup-site`, `hermetic-diagrams` and `scrapup` ran all
@@ -484,11 +484,11 @@ Step 2 (`PUT repos/scrapup/scrapup-ds/rulesets/<id>`): adds `verify` and `e2e` t
 POST repos/scrapup/scrapup-ds/rulesets   — release-tags
 { "name": "release-tags", "target": "tag", "enforcement": "active",
   "conditions": { "ref_name": { "include": ["refs/tags/v*"], "exclude": [] } },
-  "bypass_actors": [ { "actor_id": 15368, "actor_type": "Integration", "bypass_mode": "always" } ],
-  "rules": [ { "type": "creation" }, { "type": "update" }, { "type": "deletion" } ] }
+  "bypass_actors": [],
+  "rules": [ { "type": "update" }, { "type": "deletion" } ] }
 ```
 
-(`actor_id` 5 = repository role *admin*; 15368 = GitHub Actions app.)
+(`actor_id` 5 = repository role *admin*; 15368 = GitHub Actions app, used as `integration_id` of required checks. Verified 2026-10-02: `POST rulesets` with `Integration` 15368 as bypass actor returns 422 "Actor GitHub Actions integration must be part of the ruleset source or owner organization".)
 
 #### 4.3.3 Code scanning (RN-22)
 
@@ -536,7 +536,7 @@ starts at `0.0.0`; the first `feat` yields `v0.1.0`.
 | Git install | `prepare` build fails on consumer | `verify` builds the same lockfile on every PR; tag only after green `main` | Install fails loudly |
 | CI | Required check missing (e.g. renamed job) | Job names `validate`/`dependency-review`/`verify`/`e2e` are frozen; rename requires a ruleset update in the same PR | Merges blocked until fixed |
 | Rulesets | Release PR lacks checks (workflows not triggered for bot PRs) | Close/reopen the Release PR to trigger `pull_request`; checks are never bypassed | Release delayed |
-| Rulesets | `release-tags` blocks release-please tag creation | Verify bypass actor (Actions app 15368); fix ruleset — never create tags by hand | Release delayed |
+| Rulesets | `release-tags` blocks release-please tag creation | Ruleset must not contain `creation`; fix ruleset — never create tags by hand | Release delayed |
 | CodeQL | High/critical alert on PR | Merge blocked by `code_scanning` rule; fix or dismiss with justification | PR blocked |
 | Dependency review | Vulnerable dependency (≥ moderate) | PR blocked; pin/override or wait for fix | PR blocked |
 | Dependabot | Update breaks build/e2e | PR stays red; never merged without green checks | None |
@@ -556,8 +556,8 @@ starts at `0.0.0`; the first `feat` yields `v0.1.0`.
   Dependabot version updates (weekly) and security updates.
 - Review (RN-02): two layered rulesets — 1 code-owner approval with admin bypass only at PR merge;
   required checks, code scanning, linear history, no force-push/deletion with **no** bypass.
-- Release integrity (RN-20): `release-tags` ruleset — only GitHub Actions creates/updates/deletes
-  `v*` tags.
+- Release integrity (RN-20): `release-tags` ruleset — `v*` tags can never be moved or deleted;
+  creation only by release-please (process rule; platform limitation, §4.3.2).
 - Scanning (RN-22): dependency review blocks PRs with vulnerable dependencies (≥ moderate); CodeQL
   (JS/TS + Actions) blocks merges on high/critical security alerts or errors.
 - Disclosure (RN-23): private vulnerability reporting + `SECURITY.md`.

@@ -56,7 +56,7 @@ else all green
   Validator -> PR : approve + merge Release PR (bot-authored)
   PR -> Main : chore(main): release X.Y.Z
   Main -> RP : push event
-  RP -> Main : tag vX.Y.Z + GitHub Release\n(release-tags ruleset: Actions only)
+  RP -> Main : tag vX.Y.Z + GitHub Release\n(release-tags ruleset: immutable v* tags)
   Consumer -> Main : npm i github:scrapup/scrapup-ds#vX.Y.Z
   Main --> Consumer : tarball; npm runs "prepare" (build)
 end

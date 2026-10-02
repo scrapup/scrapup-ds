@@ -81,7 +81,7 @@ Actors:
 | RN-17 | Commits and PRs carry no AI co-authorship trailer | Mandatory |
 | RN-18 | Animations are part of the brand and stay on by default; each animated component offers an opt-out property for a static rendering | Mandatory |
 | RN-19 | Secret scanning and secret push protection are **enabled** on the repository (deliberate deviation from the sibling repos, which have them off); vulnerability alerts on | Mandatory |
-| RN-20 | Release tags (`v*`) are created, moved or deleted only by the release automation | Restrictive |
+| RN-20 | Release tags (`v*`) are created only by the release automation (process rule) and can never be moved or deleted (enforced) | Restrictive |
 | RN-21 | Supply chain: automation runs with read-only permissions by default (write only where declared); third-party automation steps are pinned to immutable references and restricted to an approved list; dependency and automation updates are proposed automatically every week, and security fixes as soon as published | Mandatory |
 | RN-22 | A PR that introduces a dependency with a known vulnerability of moderate severity or higher is blocked; code and automation are scanned and a high/critical security finding blocks the merge | Restrictive |
 | RN-23 | Vulnerabilities are reported privately through the repository's private reporting channel, following a published security policy | Mandatory |
@@ -105,7 +105,8 @@ Actors:
 | Direct push / force-push / deletion on `main` | Rejected by branch protection | Critical |
 | Push containing a detectable secret (any branch) | Rejected by secret push protection; existing leaks raise a secret-scanning alert | Critical |
 | PR without code-owner approval | Blocked for contributors; the admin can merge their own PR only by the approval bypass at merge time | High |
-| Manual creation/move/deletion of a `v*` tag | Rejected | Critical |
+| Move/deletion of a `v*` tag | Rejected | Critical |
+| Manual creation of a `v*` tag | Forbidden by process (not platform-enforced: GitHub does not accept the Actions app as a repository ruleset bypass actor) | Critical |
 | PR adds a vulnerable dependency (≥ moderate) or code scanning finds a high/critical issue | Merge blocked, no bypass | Critical |
 | Automated update PR breaks the build or tests | Stays blocked by the checks; never merged red | Medium |
 
@@ -188,4 +189,4 @@ formalized in `plan.md`.
 | OP-02 | Minimum coverage | 95% |
 | OP-03 | Reduced motion | Keep animations on; per-component opt-out property (RN-18) |
 
-> Status: **Approved** (2026-10-01). Amended 2026-10-01: unit + end-to-end test layers made explicit (§5); RN-19 secret scanning + push protection; RN-02 rewritten (approval + admin PR bypass) and RN-20..RN-23 repository security hardening.
+> Status: **Approved** (2026-10-01). Amended 2026-10-01: unit + end-to-end test layers made explicit (§5); RN-19 secret scanning + push protection; RN-02 rewritten (approval + admin PR bypass) and RN-20..RN-23 repository security hardening. Amended 2026-10-02: RN-20 tag creation is a process rule (platform limitation).
