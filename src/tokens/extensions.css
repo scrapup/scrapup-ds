@@ -1,0 +1,21 @@
+/*
+ * Tokens added by @scrapup/ds for values the design project components used inline (plan §3.2,
+ * RN-07). Names never collide with the ported design tokens (test/tokens.test.ts).
+ * Accent-derived values resolve on :root, like the ported --glow-* tokens.
+ */
+:root {
+  /* Cyan washes and outlines (Button secondary, Backdrop frame labels) */
+  --su-cyan-wash: rgba(53,230,224,.08);
+  --su-cyan-outline: rgba(53,230,224,.4);
+  --su-cyan-label: rgba(53,230,224,.62);
+
+  /* Wordmark on paper: neon-light "up" glow */
+  --glow-text-mark-light: 0 0 16px rgba(232,100,31,.35);
+
+  /* Active underline (LangSwitch, TopBar links) */
+  --glow-underline: 0 0 10px color-mix(in srgb, var(--accent) 70%, transparent);
+
+  /* Focus ring for interactive components */
+  --focus-ring: 2px solid var(--su-cyan);
+  --focus-ring-offset: 2px;
+}

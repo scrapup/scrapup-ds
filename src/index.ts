@@ -1,4 +1,13 @@
-// Public API of @scrapup/ds. Components are exported here as they land (US-84, US-86).
+// Public API of @scrapup/ds. The stylesheet import must stay first (fonts @import leads dist/styles.css).
 import './styles.css';
 
-export {};
+export { Button, LangSwitch } from './components/actions';
+export type {
+  ButtonProps,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
+  LangSwitchProps,
+} from './components/actions';
+export { Backdrop, Wordmark } from './components/brand';
+export type { BackdropProps, WordmarkProps, WordmarkSize, WordmarkTone } from './components/brand';

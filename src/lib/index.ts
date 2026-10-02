@@ -2,6 +2,7 @@
 export { cx } from './cx';
 export type { ClassPart } from './cx';
 export { externalLinkProps } from './externalLinkProps';
+export { hasContent } from './hasContent';
 export type { LinkProps } from './externalLinkProps';
 export { resolveOption } from './resolveOption';
 export { splitHighlight } from './splitHighlight';
