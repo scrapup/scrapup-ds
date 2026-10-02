@@ -9,6 +9,8 @@ const TOKEN_FILES = ['fonts', 'colors', 'typography', 'spacing', 'effects', 'bas
 // … and tokens added by this package for values components used inline (plan §3.2).
 const EXTENSION_FILE = 'extensions';
 const ALL_TOKEN_FILES = [...TOKEN_FILES, EXTENSION_FILE];
+// Design component colors with no base token to derive from (kept as literals on purpose).
+const LITERAL_EXTENSIONS = new Set(['--su-fg-footer', '--su-fg-hint']);
 
 function read(name: string): string {
   return readFileSync(join(TOKENS_DIR, `${name}.css`), 'utf8');
@@ -54,8 +56,14 @@ describe('token layer', () => {
     for (const name of EXTENDED.keys()) expect(Object.keys(fixture)).not.toContain(name);
   });
 
-  it('derives extension colors from base tokens (no color literals)', () => {
-    for (const [name, value] of EXTENDED) expect([name, value]).not.toEqual([name, expect.stringMatching(/#|rgba?\(|hsla?\(/)]);
+  it('derives extension colors from base tokens (literals only for allowlisted design inks)', () => {
+    const derived = [...EXTENDED].filter(([name]) => !LITERAL_EXTENSIONS.has(name));
+    for (const [name, value] of derived) expect([name, value]).not.toEqual([name, expect.stringMatching(/#|rgba?\(|hsla?\(/)]);
+    for (const name of LITERAL_EXTENSIONS) expect(EXTENDED.has(name)).toBe(true);
+    // Pinned: raised to the minimum WCAG AA value on ink (plan §3.2).
+    expect(EXTENDED.get('--su-fg-hint')).toBe('rgba(190,200,220,.6)');
+    expect(EXTENDED.get('--su-fg-flow')).toBe('var(--su-fg-hint)');
+    expect(EXTENDED.get('--su-fg-footer')).toBe('#9AA0B0');
   });
 
   it('derives every ported color-mix token from the accent (RN-09)', () => {

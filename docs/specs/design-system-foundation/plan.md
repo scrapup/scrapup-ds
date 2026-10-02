@@ -254,6 +254,8 @@ deviations:
 | New tokens for every literal that components used inline: e.g. `--su-cyan-wash: rgba(53,230,224,.08)`, `--su-cyan-outline: rgba(53,230,224,.4)`, `--su-placeholder: rgba(184,190,204,.34)`, `--glow-button-form`, `--shadow-success` | RN-07: components reference tokens only; literals live only in `src/tokens/` |
 | **Remove** `@media (prefers-reduced-motion: reduce) { --flicker-duration: 0s }` | OP-03: animations stay on; opt-out is a component prop (RN-18) |
 | Keyframes `scrapupFlicker`, `scrapupGlitchC/M/Slice` kept in `effects.css` | Brand motion |
+| Component text inks below WCAG AA raised to the minimum passing value (decided 2026-10-02): Footer meta/author `--su-fg-7` (3.21:1) → `--su-fg-6` (5.40:1); CodeChip hint `.45` (3.12:1) and FlowLine `.55` (4.13:1) → `rgba(190,200,220,.6)` (4.70:1). Ported tokens unchanged; logotype text stays exempt (WCAG 1.4.3) | Zero critical/serious axe gate (spec §5) |
+| Package-added tokens live in `src/tokens/extensions.css`; ported files stay 1:1 with the design project | Parity fixture stays exact |
 | Accent override applies on `:root` (verified in e2e, TF-83-01): `--glow-*`/`--shadow-*` are declared on `:root` and resolve `var(--accent)` there, so a subtree override re-tints `--accent` itself but not the derived tokens | Documented in README; consumers theme with `:root { --accent: … }` |
 
 Token parity is guarded by `test/fixtures/design-tokens.json` (name → value, exported from the
@@ -281,8 +283,8 @@ Per-component contract (defaults in **bold**):
 | Backdrop | `label?`; `site?` (**"SCRAPUP.DEV"**); `marks?` (**true**); `scanlines?` (**true**); `fullHeight?` (false — replaces `style={{minHeight:'100vh'}}`); `children`; `className?` |
 | Button | `variant?: **'primary'** \| 'secondary' \| 'link'`; `size?: **'md'** \| 'sm'`; `icon?`; `href?` (→ `<a>`) ; `onClick?`; `type?: **'button'** \| 'submit'`; `children`; `aria-label?` (icon-only buttons); `disabled?`; `className?` |
 | LangSwitch | `value?` (**'EN'**); `options?` (**['EN','PT','JA']**); `onChange?(lang)`; `label?` (**'Language'**, group accessible name); buttons with `aria-pressed` |
-| TopBar | `tagline?`; `links?: {label, href?, onClick?}[]`; `active?`; `lang?`; `onLang?` (omit → no switch); `repo?`; `repoHref?`; `homeHref?` |
-| Footer | `items?: string[]`; `links?: {label, href?, onClick?}[]`; `author?` |
+| TopBar | `tagline?`; `links?: NavLink[]` (`{label, id?, href, onClick?} \| {label, id?, onClick}`); `active?` (matches `id ?? label`); `lang?`; `onLang?` (omit → no switch); `repo?`; `repoHref?`; `homeHref?` |
+| Footer | `items?: string[]`; `links?: NavLink[]`; `author?` |
 | Hero | `status?`; `kicker?`; `title` (required); `highlight?`; `lead?`; `callout?`; `actions?` |
 | SectionHeader | `index?`; `eyebrow?`; `title` (required); `highlight?`; `body?`; `size?: **'md'** \| 'xl'`; `bar?` |
 | Eyebrow | `index?`; `tone?: **'cyan'** \| 'neon' \| 'muted'`; `children`; `className?` |

@@ -1,0 +1,22 @@
+.su-tag {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid var(--su-cyan-edge);
+  background: var(--su-cyan-wash);
+  color: var(--su-cyan);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-nav);
+}
+
+.su-tag--quiet {
+  padding: 7px 13px;
+  border-color: var(--su-cyan-edge-quiet);
+  background: var(--surface-cyan-tint);
+  color: var(--su-fg-3);
+}
+
+.su-tag--neon {
+  border-color: var(--border-accent-soft);
+  background: var(--surface-accent-tint);
+  color: var(--accent);
+}

@@ -7,6 +7,12 @@ export const COLOR = {
   cyanWash: 'color(srgb 0.207843 0.901961 0.878431 / 0.08)',
   ink: 'rgb(10, 13, 21)',
   fg2: 'rgb(236, 238, 244)',
+  fg3: 'rgb(199, 204, 216)',
+  fg4: 'rgb(174, 180, 194)',
+  fg6: 'rgb(126, 133, 151)',
+  textMuted: 'rgb(138, 144, 160)',
+  footerInk: 'rgb(154, 160, 176)',
+  footerBand: 'rgb(7, 9, 14)',
   paperInk: 'rgb(26, 23, 20)',
   transparent: 'rgba(0, 0, 0, 0)',
 } as const;
