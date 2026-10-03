@@ -13,7 +13,7 @@
 Git タグからインストールします(パッケージは npm に公開されていません):
 
 ```bash
-npm i github:scrapup/scrapup-ds#v0.1.0 # x-release-please-version
+npm i github:scrapup/scrapup-ds#v0.1.1 # x-release-please-version
 ```
 
 要件: Node.js 24 以上、React 19(`react` と `react-dom` は peer dependencies)。

@@ -13,7 +13,7 @@ Status: Beta. A API pode mudar antes da 1.0.
 Instale a partir de uma tag Git (o pacote não é publicado no npm):
 
 ```bash
-npm i github:scrapup/scrapup-ds#v0.1.0 # x-release-please-version
+npm i github:scrapup/scrapup-ds#v0.1.1 # x-release-please-version
 ```
 
 Requisitos: Node.js 24 ou superior, React 19 (`react` e `react-dom` são peer dependencies).
