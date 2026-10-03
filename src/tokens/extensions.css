@@ -37,6 +37,15 @@
   /* Active underline (LangSwitch, TopBar links) */
   --glow-underline: 0 0 10px color-mix(in srgb, var(--accent) 70%, transparent);
 
+  /* Glows (MilestoneAxis current code, GlitchCode, WaitlistForm button) */
+  --glow-text-milestone: 0 0 18px color-mix(in srgb, var(--accent) 60%, transparent);
+  --glow-glitch: 0 0 46px color-mix(in srgb, var(--accent) 55%, transparent), 0 0 12px color-mix(in srgb, var(--accent) 45%, transparent);
+  --glow-button-form: 0 0 26px color-mix(in srgb, var(--accent) 45%, transparent);
+
+  /* Success panel shadow and surface wash (WaitlistForm) */
+  --shadow-success: 0 0 30px color-mix(in srgb, var(--accent) 18%, transparent);
+  --surface-accent-success: color-mix(in srgb, var(--accent) 9%, transparent);
+
   /* Type sizes from the design components with no base token (StatCard title, ValueStatement note) */
   --type-stat-title: 1.15rem;
   --type-note: .98rem;

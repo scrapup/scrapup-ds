@@ -301,7 +301,7 @@ Per-component contract (defaults in **bold**):
 | MilestoneAxis | `title?`; `meta?`; `milestones: {code, phase, body?, current?}[]`; `currentLabel?` |
 | PhaseSteps | `steps: {title, body?}[]` |
 | WaitlistForm | see §4.2 |
-| GlitchCode | `children`; `size?: **'lg'** \| 'md'`; `animated?` (**true**; RN-18 — new prop) |
+| GlitchCode | `children?: string \| number` (rendered in 4 layers; markup would duplicate ids/focusables); `size?: **'lg'** \| 'md'`; `animated?` (**true**; RN-18 — new prop) |
 
 Exact pixel values, spacing and tracking per component are ported from each source `.jsx` into the
 component `.css`, using tokens.
@@ -362,18 +362,18 @@ import { Button, Hero } from '@scrapup/ds';
 ### 4.2 WaitlistForm contract (RN-13)
 
 ```ts
-export type WaitlistStatus = 'idle' | 'submitting' | 'success' | 'error';
+export type WaitlistFormStatus = 'idle' | 'submitting' | 'success' | 'error';
 export interface WaitlistFormProps {
   label?: string;          // visually hidden input label — default 'E-mail address'
   placeholder?: string;    // 'you@domain.dev'
   cta?: string;            // 'JOIN THE WAITLIST ↗'
-  note?: string;           // 'No spam — one message when access opens.'
+  note?: ReactNode;        // 'No spam — one message when access opens.' (e.g. privacy-notice link)
   successTitle?: string;   // "You're on the list."
   successBody?: string;    // "We'll reach out at first access. Forging the public release."
   invalidMessage?: string; // 'Enter a valid e-mail address.'
   errorMessage?: string;   // 'Something went wrong. Try again.'
   onSubmit?: (email: string) => void | Promise<void>;
-  status?: WaitlistStatus; // controlled override (replaces source `submitted`)
+  status?: WaitlistFormStatus; // controlled override (replaces source `submitted`)
   className?: string;
 }
 ```

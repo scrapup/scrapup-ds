@@ -1,0 +1,46 @@
+.su-phase-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--su-line);
+  list-style: none;
+}
+
+.su-phase-steps__step {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6);
+  border-right: 1px solid var(--su-line-faint);
+}
+
+.su-phase-steps__step:first-child {
+  padding-left: 0;
+}
+
+.su-phase-steps__step:last-child {
+  border-right: none;
+}
+
+.su-phase-steps__number {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-nav);
+  text-shadow: var(--glow-text-index);
+}
+
+.su-phase-steps__title {
+  margin-top: var(--space-2);
+  color: var(--su-fg-2);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+.su-phase-steps__body {
+  margin-top: 5px;
+  color: var(--text-muted);
+  font-size: var(--type-body-xs);
+  line-height: 1.5;
+}

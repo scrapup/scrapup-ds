@@ -1,0 +1,119 @@
+.su-waitlist-form {
+  width: 100%;
+  max-width: 480px;
+}
+
+.su-waitlist-form__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.su-waitlist-form__field {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1.5px solid var(--su-line-input);
+  background: var(--surface-input);
+}
+
+.su-waitlist-form__field:focus-within {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.su-waitlist-form__input {
+  flex: 1 1 200px;
+  min-width: 0;
+  padding: 15px var(--space-5);
+  border: none;
+  border-radius: 0;
+  outline: none;
+  appearance: none;
+  background: transparent;
+  color: var(--su-fg-2);
+  font-family: var(--font-mono);
+  font-size: var(--type-body);
+}
+
+.su-waitlist-form__submit {
+  padding: 15px var(--space-6);
+  border: none;
+  border-radius: 0;
+  appearance: none;
+  background: var(--accent);
+  box-shadow: var(--glow-button-form);
+  color: var(--text-on-accent);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-button);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.su-waitlist-form__submit:hover {
+  filter: var(--hover-brightness);
+}
+
+.su-waitlist-form__submit:disabled {
+  cursor: progress;
+  opacity: 0.7;
+  filter: none;
+}
+
+.su-waitlist-form__message {
+  margin: 12px 0 0;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--type-caption);
+}
+
+.su-waitlist-form__note {
+  margin: 12px 0 0;
+  color: var(--su-fg-6);
+  font-size: var(--type-caption);
+}
+
+.su-waitlist-form--success {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: var(--space-5) 20px;
+  border: 1.5px solid var(--border-accent);
+  background: var(--surface-accent-success);
+  box-shadow: var(--shadow-success);
+}
+
+.su-waitlist-form__check {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-shadow: var(--glow-text-index);
+}
+
+.su-waitlist-form__success-title,
+.su-waitlist-form__success-body {
+  margin: 0;
+}
+
+.su-waitlist-form__success-title {
+  color: var(--su-fg-2);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.su-waitlist-form__success-body {
+  margin-top: 5px;
+  color: var(--text-muted);
+  font-size: var(--type-body-xs);
+}
+
+/* The success panel receives focus after a submit (tabindex -1); keep a visible ring for keyboard users. */
+.su-waitlist-form--success:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
