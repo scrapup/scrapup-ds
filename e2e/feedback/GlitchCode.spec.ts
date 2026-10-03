@@ -12,11 +12,22 @@ test.describe('Feedback/GlitchCode', () => {
     await expect(page.locator('.su-glitch-code__layer--slice')).toHaveCSS('animation-name', 'scrapupGlitchSlice');
     await expect(page.locator('.su-glitch-code__main')).toHaveCSS('animation-name', 'scrapupFlicker');
     await expect(page.locator('.su-glitch-code__layer--magenta')).toHaveCSS('color', COLOR.magenta);
+    const keyframes = await page.evaluate(() =>
+      Array.from(document.styleSheets).flatMap((sheet) =>
+        Array.from(sheet.cssRules).flatMap((rule) => (rule instanceof CSSKeyframesRule ? [rule.name] : [])),
+      ),
+    );
+    expect(keyframes).toEqual(expect.arrayContaining(['scrapupGlitchC', 'scrapupGlitchM', 'scrapupGlitchSlice', 'scrapupFlicker']));
   });
 
   test('renders static when animated is off (RN-18)', async ({ page }) => {
     await gotoStory(page, 'feedback-glitchcode--static');
-    for (const selector of ['.su-glitch-code__layer--cyan', '.su-glitch-code__layer--slice', '.su-glitch-code__main']) {
+    for (const selector of [
+      '.su-glitch-code__layer--cyan',
+      '.su-glitch-code__layer--magenta',
+      '.su-glitch-code__layer--slice',
+      '.su-glitch-code__main',
+    ]) {
       await expect(page.locator(selector)).toHaveCSS('animation-name', 'none');
     }
     await expect(page.locator('.su-glitch-code__layer--cyan')).toHaveCSS('opacity', '0');

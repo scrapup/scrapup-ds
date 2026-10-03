@@ -34,17 +34,38 @@ describe('MilestoneAxis', () => {
     expect(container.querySelectorAll('.su-milestone-axis__current')).toHaveLength(1);
   });
 
+  it('marks only the first current milestone', () => {
+    const { container } = render(
+      <MilestoneAxis
+        milestones={[
+          { code: 'A', phase: 'a', current: true },
+          { code: 'B', phase: 'b', current: true },
+        ]}
+      />,
+    );
+    expect(container.querySelectorAll('[aria-current="step"]')).toHaveLength(1);
+  });
+
+  it('skips milestones without a code and omits an empty current label (D-07)', () => {
+    const { container } = render(<MilestoneAxis currentLabel="" milestones={[{ code: '', phase: 'x' }, ...MILESTONES]} />);
+    expect(container.querySelectorAll('.su-milestone-axis__step')).toHaveLength(3);
+    expect(container.querySelector('.su-milestone-axis__current-label')).toBeNull();
+    expect(render(<MilestoneAxis milestones={[{ code: '', phase: 'x' }]} />).container.firstElementChild).toBeNull();
+  });
+
   it('omits empty header texts and bodies (D-07)', () => {
     const { container } = render(<MilestoneAxis meta="" milestones={MILESTONES} title="" />);
     expect(container.querySelector('.su-milestone-axis__header')).toBeNull();
     expect(container.querySelectorAll('.su-milestone-axis__body')).toHaveLength(2);
   });
 
-  it('renders nothing without milestones (D-07) and appends className', () => {
+  it('renders nothing without milestones (D-07)', () => {
     expect(render(<MilestoneAxis milestones={[]} />).container.firstElementChild).toBeNull();
-    expect(render(<MilestoneAxis className="extra" milestones={MILESTONES} />).container.firstElementChild?.classList.contains('extra')).toBe(
-      true,
-    );
+  });
+
+  it('appends className to the root', () => {
+    const { container } = render(<MilestoneAxis className="extra" milestones={MILESTONES} />);
+    expect(container.firstElementChild?.classList.contains('extra')).toBe(true);
   });
 
   it('has no critical or serious a11y violations', async () => {

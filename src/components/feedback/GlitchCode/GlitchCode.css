@@ -1,6 +1,8 @@
 .su-glitch-code {
   position: relative;
   display: inline-block;
+  isolation: isolate;
+  contain: paint;
   color: var(--accent);
   font-family: var(--font-display);
   font-weight: 700;

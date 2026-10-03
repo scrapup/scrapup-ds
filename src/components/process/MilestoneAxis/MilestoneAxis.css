@@ -1,5 +1,6 @@
-.su-milestone-axis.su-panel--pad-xxl {
-  padding-bottom: 36px;
+/* The design trims the axis panel's bottom padding to 36px (Panel extension point). */
+.su-milestone-axis {
+  --su-panel-pad-bottom: 36px;
 }
 
 .su-milestone-axis__header {

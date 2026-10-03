@@ -1,22 +1,25 @@
+/* --su-panel-pad-bottom is an extension point for composites (e.g. MilestoneAxis trims the bottom padding). */
 .su-panel {
+  padding: var(--su-panel-pad);
+  padding-bottom: var(--su-panel-pad-bottom, var(--su-panel-pad));
   border: 1px solid var(--border-default);
   background: var(--surface-panel);
 }
 
 .su-panel--pad-md {
-  padding: var(--space-7);
+  --su-panel-pad: var(--space-7);
 }
 
 .su-panel--pad-lg {
-  padding: 28px;
+  --su-panel-pad: 28px;
 }
 
 .su-panel--pad-xl {
-  padding: 32px;
+  --su-panel-pad: 32px;
 }
 
 .su-panel--pad-xxl {
-  padding: var(--space-9);
+  --su-panel-pad: var(--space-9);
 }
 
 .su-panel--strong {

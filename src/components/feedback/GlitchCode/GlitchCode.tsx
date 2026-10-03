@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react';
 import { cx } from '../../../lib/cx';
 import { resolveOption } from '../../../lib/resolveOption';
 import './GlitchCode.css';
@@ -9,7 +8,7 @@ export type GlitchCodeSize = (typeof SIZES)[number];
 
 export interface GlitchCodeProps {
   /** The numeral. Default "404". */
-  children?: ReactNode;
+  children?: string | number;
   /** lg (default, 404 page) · md. */
   size?: GlitchCodeSize;
   /** RGB-split glitch and flicker (RN-18). Default true; false renders it static. */

@@ -111,3 +111,9 @@
   color: var(--text-muted);
   font-size: var(--type-body-xs);
 }
+
+/* The success panel receives focus after a submit (tabindex -1); keep a visible ring for keyboard users. */
+.su-waitlist-form--success:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}

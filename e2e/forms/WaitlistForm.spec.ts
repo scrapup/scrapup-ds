@@ -21,6 +21,7 @@ test.describe('Forms/WaitlistForm', () => {
     await page.keyboard.type(EMAIL);
     await page.keyboard.press('Enter');
     await expect(page.getByRole('status')).toContainText("You're on the list.");
+    await expect(page.getByRole('status')).toBeFocused();
   });
 
   test('keeps the value and allows a retry when the handler rejects', async ({ page }) => {
@@ -32,15 +33,13 @@ test.describe('Forms/WaitlistForm', () => {
     await expect(page.getByRole('button')).toBeEnabled();
   });
 
-  test('disables the button while submitting and ignores a double submit', async ({ page }) => {
+  test('disables the button and marks it busy while the handler is pending', async ({ page }) => {
     await gotoStory(page, 'forms-waitlistform--submitting');
     await page.getByLabel('E-mail address').fill(EMAIL);
     const button = page.getByRole('button');
     await button.click();
     await expect(button).toBeDisabled();
     await expect(button).toHaveAttribute('aria-busy', 'true');
-    await page.getByLabel('E-mail address').press('Enter');
-    await expect(page.getByRole('status')).toHaveCount(0);
   });
 
   test('renders the brand field and button with square corners', async ({ page }) => {

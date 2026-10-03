@@ -26,8 +26,14 @@ export type {
   TagProps,
   TagTone,
 } from './components/content';
+export { GlitchCode } from './components/feedback';
+export type { GlitchCodeProps, GlitchCodeSize } from './components/feedback';
+export { WaitlistForm } from './components/forms';
+export type { WaitlistFormProps, WaitlistFormStatus } from './components/forms';
 export { Footer, TopBar } from './components/navigation';
 export type { FooterProps, NavLink, TopBarProps } from './components/navigation';
+export { MilestoneAxis, PhaseSteps } from './components/process';
+export type { Milestone, MilestoneAxisProps, PhaseStep, PhaseStepsProps } from './components/process';
 export { FeatureCard, Panel, StatCard, StatementList, ValueStatement } from './components/surfaces';
 export type {
   FeatureCardLabelTone,
@@ -42,9 +48,3 @@ export type {
   StatementListProps,
   ValueStatementProps,
 } from './components/surfaces';
-export { GlitchCode } from './components/feedback';
-export type { GlitchCodeProps, GlitchCodeSize } from './components/feedback';
-export { WaitlistForm } from './components/forms';
-export type { WaitlistFormProps, WaitlistStatus } from './components/forms';
-export { MilestoneAxis, PhaseSteps } from './components/process';
-export type { Milestone, MilestoneAxisProps, PhaseStep, PhaseStepsProps } from './components/process';

@@ -10,7 +10,7 @@ export interface Milestone {
   /** Phase it closes, e.g. "Inception". */
   phase: string;
   body?: ReactNode;
-  /** Marks the milestone the product is at now (one per axis). */
+  /** Marks the milestone the product is at now; only the first marked one is current. */
   current?: boolean;
 }
 
@@ -33,7 +33,9 @@ export function MilestoneAxis({
   currentLabel = 'NOW · BETA',
   className,
 }: MilestoneAxisProps): React.JSX.Element | null {
-  if (milestones.length === 0) return null;
+  const visibleMilestones = milestones.filter((milestone) => hasContent(milestone.code));
+  if (visibleMilestones.length === 0) return null;
+  const currentIndex = visibleMilestones.findIndex((milestone) => milestone.current === true);
   const hasHeader = hasContent(title) || hasContent(meta);
   return (
     <Panel className={cx('su-milestone-axis', className)} padding="xxl" variant="strong">
@@ -44,8 +46,8 @@ export function MilestoneAxis({
         </div>
       )}
       <ol className="su-milestone-axis__steps">
-        {milestones.map((milestone, index) => {
-          const isCurrent = milestone.current === true;
+        {visibleMilestones.map((milestone, index) => {
+          const isCurrent = index === currentIndex;
           return (
             <li
               aria-current={isCurrent ? 'step' : undefined}
@@ -55,7 +57,7 @@ export function MilestoneAxis({
               {isCurrent && (
                 <span className="su-milestone-axis__current">
                   <span aria-hidden="true" className="su-milestone-axis__dot" />
-                  <span className="su-milestone-axis__current-label">{currentLabel}</span>
+                  {hasContent(currentLabel) && <span className="su-milestone-axis__current-label">{currentLabel}</span>}
                 </span>
               )}
               <span className="su-milestone-axis__code">{milestone.code}</span>
