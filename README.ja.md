@@ -19,6 +19,23 @@ npm i github:scrapup/scrapup-ds#v0.1.0 # x-release-please-version
 要件: Node.js 24 以上、React 19(`react` と `react-dom` は peer dependencies)。
 パッケージはインストール時に自動でビルドされます(`prepare`)。
 
+### インストールスクリプト
+
+パッケージは Git からインストールされるため、npm は `dist/` をビルドする `prepare` スクリプトを実行します。
+
+- npm 11 は `@scrapup/ds` に対して `allow-scripts` の警告を表示します。現在の npm では警告は参考情報で、
+  ビルドはそのまま実行されます。npm は、将来のリリースで未確認のインストールスクリプトをブロックすると
+  告知しています。パッケージを一度承認すると、`package.json` の `allowScripts` に記録されます
+  (インストールしたコミットに固定):
+
+```bash
+npm approve-scripts @scrapup/ds
+```
+
+- インストールスクリプトが無効な場合(`--ignore-scripts` または `ignore-scripts=true`)、`dist/` は
+  ビルドされず、パッケージを import できません。このパッケージのスクリプトを許可するか、そのフラグなしで
+  インストールしてください。
+
 ## 使い方
 
 アプリのエントリでスタイルシートを 1 回だけ import し、コンポーネントを使います:
