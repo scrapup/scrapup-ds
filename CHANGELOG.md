@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/scrapup/scrapup-ds/compare/v0.1.0...v0.1.1) (2026-10-03)
+
+
+### Bug Fixes
+
+* **waitlist-form:** validate e-mail with a linear-time pattern ([#20](https://github.com/scrapup/scrapup-ds/issues/20)) ([99013d8](https://github.com/scrapup/scrapup-ds/commit/99013d8ff75811a0d3ca8b0a77cce3026bd7ac90))
+
 ## 0.1.0 (2026-10-03)
 
 

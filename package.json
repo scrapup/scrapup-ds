@@ -1,6 +1,6 @@
 {
   "name": "@scrapup/ds",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "scrapup design system — tokens, brand assets and React components.",
   "private": true,
   "type": "module",
