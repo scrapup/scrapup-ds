@@ -6,7 +6,8 @@ import { pickOption } from '../../../lib/resolveOption';
 import './WaitlistForm.css';
 
 const STATUSES = ['idle', 'submitting', 'success', 'error'] as const;
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Dot-separated domain labels: no empty label, and no overlap between label and separator (linear time).
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/;
 // Practical address limit (RFC 5321); also bounds the validation cost.
 const EMAIL_MAX_LENGTH = 254;
 

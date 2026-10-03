@@ -26,7 +26,7 @@ describe('WaitlistForm', () => {
     expect(screen.queryByRole('alert')).toBeNull();
   });
 
-  it.each(['', '   ', 'not-an-email', 'a@b', 'a b@c.dev'])('rejects %j with the invalid message and no call', async (value) => {
+  it.each(['', '   ', 'not-an-email', 'a@b', 'a b@c.dev', 'a@b..c', 'a@.b', 'a@b.c.'])('rejects %j with the invalid message and no call', async (value) => {
     const onSubmit = vi.fn();
     const user = userEvent.setup();
     render(<WaitlistForm onSubmit={onSubmit} />);
@@ -36,6 +36,24 @@ describe('WaitlistForm', () => {
     const input = screen.getByLabelText('E-mail address');
     expect(input.getAttribute('aria-invalid')).toBe('true');
     expect(input.getAttribute('aria-describedby')).toBe(screen.getByRole('alert').id);
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('accepts an address with dotted local part and subdomains', () => {
+    const onSubmit = vi.fn();
+    render(<WaitlistForm onSubmit={onSubmit} />);
+    fireEvent.change(screen.getByLabelText('E-mail address'), { target: { value: 'a.b@c.d.e' } });
+    fireEvent.submit(screen.getByRole('button'));
+    expect(onSubmit).toHaveBeenCalledWith('a.b@c.d.e');
+  });
+
+  it('rejects a long run of dots after the @ in linear time', () => {
+    const onSubmit = vi.fn();
+    render(<WaitlistForm onSubmit={onSubmit} />);
+    fireEvent.change(screen.getByLabelText('E-mail address'), { target: { value: `a@${'.'.repeat(50_000)}@` } });
+    const start = performance.now();
+    fireEvent.submit(screen.getByRole('button'));
+    expect(performance.now() - start).toBeLessThan(100);
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
