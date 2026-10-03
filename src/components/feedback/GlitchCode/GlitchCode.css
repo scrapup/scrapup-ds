@@ -1,0 +1,59 @@
+.su-glitch-code {
+  position: relative;
+  display: inline-block;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+}
+
+.su-glitch-code--lg {
+  font-size: clamp(7rem, 24vw, 17rem);
+}
+
+.su-glitch-code--md {
+  font-size: clamp(3.5rem, 12vw, 8rem);
+}
+
+.su-glitch-code__layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.su-glitch-code__layer--cyan {
+  color: var(--su-cyan);
+  mix-blend-mode: screen;
+}
+
+.su-glitch-code__layer--magenta {
+  color: var(--su-magenta);
+  mix-blend-mode: screen;
+}
+
+.su-glitch-code__layer--slice {
+  color: var(--accent);
+}
+
+.su-glitch-code__main {
+  position: relative;
+  text-shadow: var(--glow-glitch);
+}
+
+.su-glitch-code--animated .su-glitch-code__layer--cyan {
+  animation: scrapupGlitchC 4.2s infinite;
+}
+
+.su-glitch-code--animated .su-glitch-code__layer--magenta {
+  animation: scrapupGlitchM 4.2s infinite;
+}
+
+.su-glitch-code--animated .su-glitch-code__layer--slice {
+  opacity: 1;
+  animation: scrapupGlitchSlice 4.2s infinite;
+}
+
+.su-glitch-code--animated .su-glitch-code__main {
+  animation: scrapupFlicker 6s infinite;
+}

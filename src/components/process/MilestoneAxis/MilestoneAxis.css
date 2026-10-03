@@ -1,0 +1,116 @@
+.su-milestone-axis.su-panel--pad-xxl {
+  padding-bottom: 36px;
+}
+
+.su-milestone-axis__header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
+}
+
+.su-milestone-axis__title,
+.su-milestone-axis__meta {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-eyebrow);
+}
+
+.su-milestone-axis__title {
+  color: var(--text-muted);
+  letter-spacing: 0.18em;
+}
+
+/* The design's --su-fg-faint (.4) is below WCAG AA; the minimum AA ink is used (plan §3.2). */
+.su-milestone-axis__meta {
+  color: var(--su-fg-hint);
+  letter-spacing: 0.12em;
+}
+
+.su-milestone-axis__steps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.su-milestone-axis__step {
+  display: flex;
+  flex: 1 1 180px;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 150px;
+  padding: var(--space-4) 18px 0;
+  border-top: 2px solid var(--su-line-strong);
+}
+
+.su-milestone-axis__step:first-child {
+  padding-left: 0;
+}
+
+.su-milestone-axis__step:last-child {
+  padding-right: 0;
+}
+
+.su-milestone-axis__step--current {
+  border-top-color: var(--accent);
+  box-shadow: var(--glow-rule-top);
+}
+
+.su-milestone-axis__current {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.su-milestone-axis__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-dot);
+  background: var(--accent);
+  box-shadow: var(--glow-dot);
+}
+
+.su-milestone-axis__current-label {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-micro);
+  letter-spacing: var(--tracking-label);
+}
+
+.su-milestone-axis__code {
+  color: var(--su-fg-2);
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.su-milestone-axis__step--current .su-milestone-axis__code {
+  color: var(--accent);
+  text-shadow: var(--glow-text-milestone);
+}
+
+.su-milestone-axis__phase {
+  margin-top: 7px;
+  color: var(--su-fg-2);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.su-milestone-axis__body {
+  margin-top: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--type-caption);
+  line-height: 1.45;
+}
+
+.su-milestone-axis__step--current .su-milestone-axis__body {
+  color: var(--su-fg-3);
+}

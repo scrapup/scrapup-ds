@@ -51,3 +51,7 @@ body {
 .sb-story-copy--tight {
   padding: 0;
 }
+
+.sb-story-form {
+  width: 480px;
+}

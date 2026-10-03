@@ -42,3 +42,9 @@ export type {
   StatementListProps,
   ValueStatementProps,
 } from './components/surfaces';
+export { GlitchCode } from './components/feedback';
+export type { GlitchCodeProps, GlitchCodeSize } from './components/feedback';
+export { WaitlistForm } from './components/forms';
+export type { WaitlistFormProps, WaitlistStatus } from './components/forms';
+export { MilestoneAxis, PhaseSteps } from './components/process';
+export type { Milestone, MilestoneAxisProps, PhaseStep, PhaseStepsProps } from './components/process';
