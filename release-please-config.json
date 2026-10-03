@@ -7,7 +7,21 @@
       "initial-version": "0.1.0",
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": false,
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "README.md"
+        },
+        {
+          "type": "generic",
+          "path": "README.pt.md"
+        },
+        {
+          "type": "generic",
+          "path": "README.ja.md"
+        }
+      ]
     }
   }
 }
