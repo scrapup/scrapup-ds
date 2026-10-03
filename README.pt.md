@@ -19,6 +19,22 @@ npm i github:scrapup/scrapup-ds#v0.1.0 # x-release-please-version
 Requisitos: Node.js 24 ou superior, React 19 (`react` e `react-dom` são peer dependencies).
 O pacote faz o próprio build na instalação (`prepare`).
 
+### Scripts de instalação
+
+Como o pacote é instalado a partir do Git, o npm executa o script `prepare` para gerar `dist/`.
+
+- O npm 11 exibe um aviso `allow-scripts` para `@scrapup/ds`. Nas versões atuais do npm o aviso é
+  apenas consultivo e o build continua a rodar; o npm informa que uma versão futura bloqueará scripts
+  de instalação não revisados. Aprove o pacote uma vez para registrá-lo no seu `package.json`
+  (`allowScripts`, fixado no commit instalado):
+
+```bash
+npm approve-scripts @scrapup/ds
+```
+
+- Com scripts de instalação desativados (`--ignore-scripts` ou `ignore-scripts=true`), `dist/` não é
+  gerado e o pacote não pode ser importado. Permita os scripts deste pacote, ou instale sem essa flag.
+
 ## Uso
 
 Importe a stylesheet uma vez, na entrada da aplicação, e depois use os componentes:
